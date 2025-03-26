@@ -18,15 +18,22 @@
     </div>
     <fieldset>
         <form action="" method="post">
-            Email<input type="email" placeholder="Introduce tu email" class="mail"><br><br>
-           Contraseña <input type="password" class="psswd" placeholder="Introduce tu contraseña">
-        </form><br>
-        <a id="registro" href="registro.php">Aun no estoy registrado</a>
-        <form>
+        <form action="" method="post">
+            Email: <input type="email" placeholder="Introduce tu email" class="mail"><br><br>
+            Contraseña: <input type="password" class="psswd" placeholder="Introduce tu contraseña"><br><br>
             <input type="checkbox" name="recordar" id="recordar">Mantener sesión iniciada<br><br>
             <button id="login" type="submit">Iniciar sesión</button>
-
         </form>
+
+        </form><br>
+        <a id="registro" href="registro.php">Aun no estoy registrado</a>
+        <form action="" method="post">
+            Email: <input type="email" placeholder="Introduce tu email" class="mail"><br><br>
+            Contraseña: <input type="password" class="psswd" placeholder="Introduce tu contraseña"><br><br>
+            <input type="checkbox" name="recordar" id="recordar">Mantener sesión iniciada<br><br>
+            <button id="login" type="submit">Iniciar sesión</button>
+        </form>
+
     
     
     </fieldset>

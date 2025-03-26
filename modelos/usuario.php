@@ -3,9 +3,10 @@ class Usuario {
     private $id;
     private $nombre;
     private $email;
-    private $passwd; // Almacena la contraseña en texto claro, solo para el uso interno del objeto.
+    private $passwd; // Contraseña almacenada de forma interna (texto claro).
     private $conn;
 
+    // Constructor
     public function __construct($conn, $id = null, $nombre = "", $email = "", $passwd = "") {
         $this->conn = $conn;
         $this->id = $id;
@@ -14,7 +15,7 @@ class Usuario {
         $this->passwd = $passwd;
     }
 
-    // Métodos para obtener los datos del usuario
+    // Métodos para obtener datos del usuario
     public function getId() {
         return $this->id;
     }
@@ -36,24 +37,24 @@ class Usuario {
         $usuario = $resultado->fetch_assoc();
 
         if ($usuario && password_verify($passwd, $usuario['password'])) {
+            // Inicializar datos del usuario autenticado
             $this->id = $usuario['id'];
             $this->nombre = $usuario['nombre'];
             $this->email = $usuario['email'];
-            $this->passwd = $usuario['password'];  // No se almacena la contraseña en texto claro
             return true;
         }
-        return false;
+        return false; // Credenciales incorrectas
     }
 
-    // Método para registrar usuario
+    // Método para registrar un nuevo usuario
     public function registrar() {
         $stmt = $this->conn->prepare("INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)");
-        $passwdHash = password_hash($this->passwd, PASSWORD_DEFAULT);
+        $passwdHash = password_hash($this->passwd, PASSWORD_DEFAULT); // Hash de la contraseña
         $stmt->bind_param("sss", $this->nombre, $this->email, $passwdHash);
         return $stmt->execute();
     }
 
-    // Método para actualizar contraseña
+    // Método para actualizar la contraseña
     public function actualizarContraseña($nuevaPasswd) {
         $this->passwd = password_hash($nuevaPasswd, PASSWORD_DEFAULT);
         $stmt = $this->conn->prepare("UPDATE usuarios SET password = ? WHERE id = ?");
@@ -61,7 +62,7 @@ class Usuario {
         return $stmt->execute();
     }
 
-    // Método para obtener usuario por email
+    // Obtener usuario por email
     public function obtenerUsuarioPorEmail($email) {
         $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE email = ?");
         $stmt->bind_param("s", $email);
@@ -95,7 +96,7 @@ class Usuario {
         return $stmt->execute();
     }
 
-    // Mostrar información del usuario (esto es para depuración)
+    // Mostrar información del usuario (para depuración)
     public function mostrarInformacionUsuario() {
         echo "ID: " . $this->id . ", Nombre: " . $this->nombre . ", Email: " . $this->email;
     }

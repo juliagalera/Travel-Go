@@ -10,7 +10,7 @@ class ReseñaController {
     }
 
     // Método para crear una reseña
-    public function crearReseña($usuario_id, $destino_id, $comentario, $calificacion){
+    public function crearReseña($usuario_id, $lugar_id, $comentario, $calificacion){
         // Validación de datos
         if (empty($comentario) || !is_numeric($calificacion) || $calificacion < 1 || $calificacion > 5) {
             return $this->respuestaJSON(false, 'Datos inválidos');
@@ -18,7 +18,7 @@ class ReseñaController {
 
         $fecha = date('Y-m-d H:i:s'); // Fecha actual
 
-        $reseña = new Reseña($this->conn, null, $usuario_id, $destino_id, $comentario, $calificacion, $fecha);
+        $reseña = new Reseña($this->conn, null, $usuario_id, $lugar_id, $comentario, $calificacion, $fecha);
         
         try {
             if ($reseña->agregarReseña()) {
@@ -74,9 +74,9 @@ class ReseñaController {
         }
     }
 
-    // Método para listar todas las reseñas de un destino
-    public function listarReseñas($destino_id){
-        $reseñas = Reseña::obtenerReseñas($this->conn, $destino_id);
+    // Método para listar todas las reseñas de un lugar
+    public function listarReseñas($lugar_id){
+        $reseñas = Reseña::obtenerReseñas($this->conn, $lugar_id);
         
         if (empty($reseñas)) {
             return $this->respuestaJSON(false, 'No se encontraron reseñas');
@@ -99,7 +99,7 @@ class ReseñaController {
             'comentario' => $reseña->getComentario(),
             'calificacion' => $reseña->getCalificacion(),
             'usuario_id' => $reseña->getUsuarioId(),
-            'destino_id' => $reseña->getDestinoId(),
+            'lugar_id' => $reseña->getLugarId(),
         ];
 
         return $this->respuestaJSON(true, 'Detalles de la reseña', $detalles);
