@@ -35,7 +35,7 @@ $sql="CREATE TABLE IF NOT EXISTS usuarios(
 
 $conn->query($sql);
 
-$sql = "CREATE TABLE lugares (
+$sql = "CREATE TABLE IF NOT EXISTS lugares (
     id INT AUTO_INCREMENT PRIMARY KEY, 
     nombre VARCHAR(255) NOT NULL,
     descripción TEXT,
@@ -46,7 +46,7 @@ $sql = "CREATE TABLE lugares (
 $conn->query($sql);
 
 //Creación tabla reseñas
-$sql = "CREATE TABLE IF NOT EXISTS reseñas(
+$sql = "CREATE TABLE IF NOT EXISTS resenas(
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT,
     lugar_id INT,
@@ -54,7 +54,7 @@ $sql = "CREATE TABLE IF NOT EXISTS reseñas(
     calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (lugar_id) REFERENCES lugar(id) ON DELETE CASCADE
+    FOREIGN KEY (lugar_id) REFERENCES lugares(id) ON DELETE CASCADE
 )"; 
 
 $conn->query($sql);
