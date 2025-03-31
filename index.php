@@ -26,10 +26,63 @@
     <!-- Sección estrecha con fondo rosa -->
     <div class="welcome">
         <h1>Ven a visitar Granada...</h1>
-        <button id="iniciarSesion"onclick()="/vistas/login.php">Ya tengo cuenta</button>
-        <button id="crearSesion"onclick()="/vistas/registro.php">Aun no tengo cuenta</button>
+        <button id="iniciarSesion">Ya tengo cuenta</button>
+        <button id="crearSesion">Aun no tengo cuenta</button>
     </div>
 </div>
+<?php
+
+require_once 'config/database.php';
+require_once 'controladores\UsuarioController.php';
+
+$conn = new mysqli('localhost', 'root','', 'travel_go');
+
+if (isset($_GET['accion'])) {
+    $accion = $_GET['accion'];
+    switch ($accion) {
+        case 'registrarUsuario':
+            require_once 'controladores/UsuarioController.php';
+            $controller = new UsuarioController($conn);
+            $controller->registrarUsuario();
+            break;
+        
+        case 'iniciarSesion':
+            $usuarioController->iniciarSesion(); 
+            break;
+        
+        case 'listarUsuarios':
+            $usuarioController->listarUsuarios(); 
+            break;
+        
+        case 'eliminarUsuario':
+            $usuarioController->eliminarUsuario(); 
+            break;
+            
+        // Rutas para el controlador de Ruta
+        case 'listarRutas':
+            $rutaController->obtenerDetallesRuta();
+            break;
+        
+        case 'generarRuta':
+            $rutaController->generarRuta();
+            break;
+        
+        // Rutas para el controlador de Resena
+        case 'agregarReseña':
+            $resenaController->crearReseña();
+            break;
+       
+        // Rutas para el controlador de Destino
+        case 'verDestinos':
+            $destinoController->verDestinos();  
+            break;
+    }
+           
+
+}
+
+
+?>
 
 
 <script>
@@ -73,6 +126,15 @@ prevButton.addEventListener('click', () => {
     clearInterval(autoSlide); // Detiene el autoplay temporalmente
     autoSlide = setInterval(nextImage, intervalTime); // Reinicia el autoplay
 });
+
+document.getElementById("iniciarSesion").addEventListener('click', () =>{
+    window.location.href="vistas/Usuarios/login.php";
+});
+
+
+document.getElementById("crearSesion").addEventListener('click', () =>{
+    window.location.href = "vistas/Usuarios/registro.php";
+})
 
 </script>
 </body>

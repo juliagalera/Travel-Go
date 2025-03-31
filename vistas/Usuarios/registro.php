@@ -7,10 +7,7 @@
     <link rel="stylesheet" href="registro.css">
 </head>
 <body>
-    <nav>
-        <a id="nav" href="index.php">Inicio</a>
-        <a id="nav" href="contacto.html">Contacto</a>
-    </nav>
+<?php include('../nav.php')?>
     <div id="contenedorLogo">
         <img id="logo" src="logo.png" alt="Logotipo Travel & Go">
         <h1>Registro</h1>
@@ -41,5 +38,7 @@
             <button type="submit">Registrarme</button>
         </form>
     </fieldset>
+    <?php
+include('../footer.php')?>
 </body>
 </html>

@@ -10,26 +10,30 @@ class UsuarioController {
     }
 
     public function registrarUsuario() {
-        if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-            $nombre = $_POST['nombre'] ?? null;
-            $email = $_POST['email'] ?? null;
-            $passwd = $_POST['passwd1'] ?? null;
+        if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+            $nombre = $_POST['nombre'];
+            $email = $_POST['email'];
+            $passwd = $_POST['passwd1'];
 
             // Validar si los campos están completos
             if (!$nombre || !$email || !$passwd) {
-                echo "Todos los campos deben estar llenos";
+                alert("Todos los campos deben estar llenos");
                 return;
+            }else{
+                if (1passwd1 !== $passwd2){
+                    alert("Las contraselas no coinciden");
+                }
             }
 
             // Hash de la contraseña
-            $usuario = new Usuario($this->conn, null, $nombre, $email, $passwd);
+            $usuario = new Usuario($this->conn, null, $nombre, $email, $passwd1);
             if ($usuario->registrar()) {
-                echo "Usuario registrado correctamente.";
+                alert("Usuario registrado correctamente.");
             } else {
-                echo "Error al registrar al usuario";
+                alert("Error al registrar al usuario");
             }
         }else{
-            echo "No se ha podido realizar el registro";
+            alert("No se ha podido realizar el registro");
         }
     }
 
