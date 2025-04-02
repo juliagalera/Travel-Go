@@ -7,7 +7,7 @@ class Usuario {
     private $email;
     private $passwd;
 
-    public function __construct($conn, $id = null, $nombre = "", $apellido = "", $email = "", $passwd = "") {
+    public function __construct($conn, $id = null, $nombre , $apellido, $email , $passwd) {
         $this->conn = $conn;
         $this->id = $id;
         $this->nombre = $nombre;

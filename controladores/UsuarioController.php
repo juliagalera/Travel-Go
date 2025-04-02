@@ -19,17 +19,17 @@ class UsuarioController {
             $passwd2 = $_POST['passwd2'];
 
             if (empty($nombre) || empty($apellido) || empty($email) || empty($passwd1) || empty($passwd2)) {
-                echo "Todos los campos son obligatorios.";
+                echo "<script>alert('Todos los campos son obligatorios.')</script>";
                 return;
             }
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                echo "El correo electrónico no es válido.";
+                echo "<script>alert('El correo electrónico no es válido.)</script>";
                 return;
             }
 
             if ($passwd1 !== $passwd2) {
-                echo "Las contraseñas no coinciden.";
+                echo "<script>alert('Las contraseñas no coinciden.')</script>";
                 return;
             }
 

@@ -18,22 +18,22 @@
     <fieldset>
         <form action="/Travel-Go/index.php?accion=registrarUsuario" method="post">
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required autofocus><br><br>
+            <input type="text" id="nombre" name="nombre" autofocus><br><br>
 
             <label for="apellido">Apellidos:</label>
-            <input type="text" id="apellido" name="apellido" required><br><br>
+            <input type="text" id="apellido" name="apellido"><br><br>
 
             <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" name="email" required><br><br>
+            <input type="email" id="email" name="email"><br><br>
 
             <label for="passwd1">Contraseña:</label>
-            <input type="password" id="passwd1" name="passwd1" required><br><br>
+            <input type="password" id="passwd1" name="passwd1" ><br><br>
 
             <label for="passwd2">Repita su contraseña:</label>
-            <input type="password" id="passwd2" name="passwd2" required><br><br>
+            <input type="password" id="passwd2" name="passwd2" ><br><br>
 
             <div id="terminos">
-                <input type="checkbox" id="acepto" name="acepto" required>
+                <input type="checkbox" id="acepto" name="acepto" >
                 <label for="acepto">Acepto los <a href="terminos.html">términos y condiciones</a></label>
             </div>
 
