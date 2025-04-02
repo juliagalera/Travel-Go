@@ -1,21 +1,22 @@
 <?php
 class Usuario {
+    private $conn;
     private $id;
     private $nombre;
+    private $apellido;
     private $email;
-    private $passwd; // Contraseña almacenada de forma interna (texto claro).
-    private $conn;
+    private $passwd;
 
-    // Constructor
-    public function __construct($conn, $id = null, $nombre = "", $email = "", $passwd = "") {
+    public function __construct($conn, $id = null, $nombre = "", $apellido = "", $email = "", $passwd = "") {
         $this->conn = $conn;
         $this->id = $id;
         $this->nombre = $nombre;
+        $this->apellido = $apellido;
         $this->email = $email;
         $this->passwd = $passwd;
     }
 
-    // Métodos para obtener datos del usuario
+
     public function getId() {
         return $this->id;
     }
@@ -28,75 +29,103 @@ class Usuario {
         return $this->email;
     }
 
-    // Método para autenticar usuario
+
     public function autenticar($email, $passwd) {
+        if (!$this->conn) {
+            throw new Exception("La conexión a la base de datos no está inicializada.");
+        }
+
         $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $resultado = $stmt->get_result();
         $usuario = $resultado->fetch_assoc();
 
-        if ($usuario && password_verify($passwd, $usuario['password'])) {
-            // Inicializar datos del usuario autenticado
+        if ($usuario && password_verify($passwd, $usuario['passwd'])) {
             $this->id = $usuario['id'];
             $this->nombre = $usuario['nombre'];
             $this->email = $usuario['email'];
             return true;
         }
-        return false; // Credenciales incorrectas
+        return false;
     }
 
-    // Método para registrar un nuevo usuario
     public function registrar() {
-        $stmt = $this->conn->prepare("INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)");
-        $passwdHash = password_hash($this->passwd, PASSWORD_DEFAULT); // Hash de la contraseña
-        $stmt->bind_param("sss", $this->nombre, $this->email, $passwdHash);
+        // Verificar si el correo ya está registrado
+        $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE email = ?");
+        $stmt->bind_param("s", $this->email);
+        $stmt->execute();
+        if ($stmt->get_result()->num_rows > 0) {
+            echo "El correo electrónico ya está registrado.";
+            return false;
+        }
+
+        // Insertar usuario en la base de datos
+        $stmt = $this->conn->prepare("INSERT INTO usuarios (nombre, apellido, email, passwd) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $this->nombre, $this->apellido, $this->email, $this->passwd);
         return $stmt->execute();
     }
 
-    // Método para actualizar la contraseña
+
+    
     public function actualizarContraseña($nuevaPasswd) {
+        if (!$this->conn) {
+            throw new Exception("La conexión a la base de datos no está inicializada.");
+        }
+
         $this->passwd = password_hash($nuevaPasswd, PASSWORD_DEFAULT);
-        $stmt = $this->conn->prepare("UPDATE usuarios SET password = ? WHERE id = ?");
+        $stmt = $this->conn->prepare("UPDATE usuarios SET passwd = ? WHERE id = ?");
         $stmt->bind_param("si", $this->passwd, $this->id);
         return $stmt->execute();
     }
 
-    // Obtener usuario por email
+   
     public function obtenerUsuarioPorEmail($email) {
+        if (!$this->conn) {
+            throw new Exception("La conexión a la base de datos no está inicializada.");
+        }
+
         $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $resultado = $stmt->get_result();
         $usuario = $resultado->fetch_assoc();
-        
+
         if ($usuario) {
-            return new Usuario($this->conn, $usuario['id'], $usuario['nombre'], $usuario['email'], $usuario['password']);
+            return new Usuario($this->conn, $usuario['id'], $usuario['nombre'], $usuario['email'], $usuario['passwd']);
         }
         return null;
     }
 
-    // Obtener todos los usuarios
+   
     public function obtenerTodoslosUsuarios() {
+        if (!$this->conn) {
+            throw new Exception("La conexión a la base de datos no está inicializada.");
+        }
+
         $stmt = $this->conn->prepare("SELECT * FROM usuarios");
         $stmt->execute();
         $resultado = $stmt->get_result();
 
         $usuarios = [];
         while ($fila = $resultado->fetch_assoc()) {
-            $usuarios[] = new Usuario($this->conn, $fila['id'], $fila['nombre'], $fila['email'], $fila['password']);
+            $usuarios[] = new Usuario($this->conn, $fila['id'], $fila['nombre'], $fila['email'], $fila['passwd']);
         }
         return $usuarios;
     }
 
-    // Eliminar usuario
+    
     public function eliminarUsuario() {
+        if (!$this->conn) {
+            throw new Exception("La conexión a la base de datos no está inicializada.");
+        }
+
         $stmt = $this->conn->prepare("DELETE FROM usuarios WHERE id = ?");
         $stmt->bind_param("i", $this->id);
         return $stmt->execute();
     }
 
-    // Mostrar información del usuario (para depuración)
+    
     public function mostrarInformacionUsuario() {
         echo "ID: " . $this->id . ", Nombre: " . $this->nombre . ", Email: " . $this->email;
     }

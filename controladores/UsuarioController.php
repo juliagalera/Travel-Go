@@ -10,45 +10,60 @@ class UsuarioController {
     }
 
     public function registrarUsuario() {
-        if ($_SERVER["REQUEST_METHOD"] === 'POST') {
-            $nombre = $_POST['nombre'];
-            $email = $_POST['email'];
-            $passwd = $_POST['passwd1'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validación de datos
+            $nombre = htmlspecialchars($_POST['nombre']);
+            $apellido = htmlspecialchars($_POST['apellido']);
+            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $passwd1 = $_POST['passwd1'];
+            $passwd2 = $_POST['passwd2'];
 
-            // Validar si los campos están completos
-            if (!$nombre || !$email || !$passwd) {
-                alert("Todos los campos deben estar llenos");
+            if (empty($nombre) || empty($apellido) || empty($email) || empty($passwd1) || empty($passwd2)) {
+                echo "Todos los campos son obligatorios.";
                 return;
-            }else{
-                if (1passwd1 !== $passwd2){
-                    alert("Las contraselas no coinciden");
-                }
             }
 
-            // Hash de la contraseña
-            $usuario = new Usuario($this->conn, null, $nombre, $email, $passwd1);
-            if ($usuario->registrar()) {
-                alert("Usuario registrado correctamente.");
-            } else {
-                alert("Error al registrar al usuario");
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo "El correo electrónico no es válido.";
+                return;
             }
-        }else{
-            alert("No se ha podido realizar el registro");
+
+            if ($passwd1 !== $passwd2) {
+                echo "Las contraseñas no coinciden.";
+                return;
+            }
+
+            if (strlen($passwd1) < 6) {
+                echo "La contraseña debe tener al menos 6 caracteres.";
+                return;
+            }
+
+            // Guardar el usuario en la base de datos
+            $hashedPasswd = password_hash($passwd1, PASSWORD_DEFAULT);
+            $usuario = new Usuario($this->conn, null, $nombre, $apellido, $email, $hashedPasswd);
+
+            if ($usuario->registrar()) {
+                // Redirigir a una página específica después del registro
+                header("Location: /Travel-Go/principal.php");
+                exit();
+            } else {
+                echo "Error al registrar el usuario.";
+            }
         }
     }
 
+
     public function iniciarSesion() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $email = $_POST['email'] ?? null;
-            $passwd = $_POST['passwd'] ?? null;
+            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $passwd = $_POST['passwd'];
 
-            // Validar si los campos están completos
             if (!$email || !$passwd) {
                 echo "Todos los campos deben estar llenos";
                 return;
             }
 
-            // Obtener datos del usuario
+            // Obtener el usuario por su email
             $usuario = new Usuario($this->conn);
             $datosUsuario = $usuario->obtenerUsuarioPorEmail($email);
 
@@ -58,9 +73,7 @@ class UsuarioController {
                 $_SESSION['usuario_id'] = $datosUsuario['id'];
                 $_SESSION['usuario_nombre'] = $datosUsuario['nombre'];
                 $_SESSION['email'] = $datosUsuario['email'];
-                $_SESSION['passwd'] = $datosUsuario['passwd'];
                 echo "Inicio de sesión exitoso";
-               
             } else {
                 echo "Email o contraseña incorrectos";
             }
@@ -81,7 +94,6 @@ class UsuarioController {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = $_POST['id'] ?? null;
 
-            // Validar si se ha proporcionado un id
             if (!$id) {
                 echo "Debes seleccionar un usuario";
                 return;

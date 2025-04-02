@@ -7,14 +7,16 @@
     <link rel="stylesheet" href="registro.css">
 </head>
 <body>
-<?php include('../nav.php')?>
+    
+<?php include('../../nav.php')
+?>
     <div id="contenedorLogo">
         <img id="logo" src="logo.png" alt="Logotipo Travel & Go">
         <h1>Registro</h1>
     </div>
     
     <fieldset>
-        <form action="index.php?action=registrarUsuario" method="post">
+        <form action="/Travel-Go/index.php?accion=registrarUsuario" method="post">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required autofocus><br><br>
 

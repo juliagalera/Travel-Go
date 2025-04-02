@@ -1,130 +1,95 @@
 /* Estilos generales para el cuerpo */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: white; /* Fondo blanco */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; /* Ajustar para que todo se distribuya desde arriba */
-    height: 100vh;
-}
-
-/* Estilos para el nav */
-nav {
-    width: 100%;
-    height: 120px; /* Altura adecuada para visibilidad */
-    padding: 20px 0; /* Espaciado interno */
-    background-color: #F7A8E0; /* Rosa pastel cálido */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 2px solid #d392d3; /* Rosa complementario */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para separarlo */
-    z-index: 10; /* Asegurar que el nav esté por encima de otros elementos */
-    position: relative; /* Posicionar el nav correctamente */
-}
-
-/* Estilos para los enlaces del nav */
-#nav {
-    list-style-type: none;
-    text-decoration: none;
-    color: black;
-    align-items: center;
-    padding: 5px 20px; /* Mayor espacio alrededor de los elementos */
-    margin: 0 20px; /* Espaciado entre los elementos del menú */
-    display: inline-block;
-    justify-content: center;
-    font-size: 18px; /* Tamaño de fuente aumentado */
-    font-weight: bold;
-    text-transform: uppercase; /* Texto en mayúsculas para destacar */
-}
-
-#nav:hover {
-    color:#fff ; /* Rosa más intenso */
-    cursor: pointer;
-    text-decoration: underline;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: white; /* Fondo blanco */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Ajustar para que todo se distribuya desde arriba */
+  height: 100vh;
 }
 
 /* Estilos para el contenedor del logo */
 #contenedorLogo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row; /* Logo y texto en una línea horizontal */
-    margin-top: 20px; /* Espaciado desde el nav */
-    gap: 15px; /* Espacio entre logo y texto */
-    margin-right: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row; /* Logo y texto en una línea horizontal */
+  margin-top: 20px; /* Espaciado desde el nav */
+  gap: 15px; /* Espacio entre logo y texto */
+  margin-right: 50px;
 }
 
 #logo {
-    height: 80px; /* Tamaño ajustado para armonizar con el texto */
-    width: auto;
+  height: 80px; /* Tamaño ajustado para armonizar con el texto */
+  width: auto;
 }
 
 .TyG {
-    font-size: 34px;
-    font-weight: bolder;
-    color: #F7A8E0; /* Rosa pastel cálido */
-    margin: 0;
+  font-size: 34px;
+  font-weight: bolder;
+  color: #f7a8e0; /* Rosa pastel cálido */
+  margin: 0;
 }
 
 /* Estilos para el fieldset */
 fieldset {
-    border-radius: 10px;
-    border: 2px solid #F7A8E0; /* Rosa pastel cálido */
-    padding: 20px;
-    width: 400px; /* Mismo ancho que el logo */
-    margin: 30px auto; /* Espaciado adecuado */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff; /* Fondo blanco */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  border-radius: 10px;
+  border: 2px solid #f7a8e0; /* Rosa pastel cálido */
+  padding: 20px;
+  width: 400px; /* Mismo ancho que el logo */
+  margin: 30px auto; /* Espaciado adecuado */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* Fondo blanco */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Estilos para inputs */
-.mail, .psswd {
-    width: 90%;
-    height: 30px;
-    margin: 10px 0;
-    padding: 5px;
-    border: 1px solid #F7A8E0; /* Rosa pastel cálido */
-    border-radius: 5px;
-    box-sizing: border-box;
-    background-color: #fff; /* Fondo blanco */
+.mail,
+.psswd {
+  width: 90%;
+  height: 30px;
+  margin: 10px 0;
+  padding: 5px;
+  border: 1px solid #f7a8e0; /* Rosa pastel cálido */
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #fff; /* Fondo blanco */
 }
 
 /* Alineación checkbox y texto */
 #recordar {
-    margin-top: 20px;
-    gap: 5px; /* Espacio entre checkbox y texto */
-    justify-content: flex-start; /* Alineación izquierda */
-    width: 10%;
-    margin-right: 30px; /* Alineación con los inputs */
+  margin-top: 20px;
+  gap: 5px; /* Espacio entre checkbox y texto */
+  justify-content: flex-start; /* Alineación izquierda */
+  width: 10%;
+  margin-right: 30px; /* Alineación con los inputs */
 }
 
 /* Ajustes para el checkbox */
 #recordar input {
-    padding: 20px; /* Elimina espacio no deseado alrededor del checkbox */
+  padding: 20px; /* Elimina espacio no deseado alrededor del checkbox */
 }
 
 /* Estilos para el botón */
 button {
-    margin-top: 20px;
-    background-color: #F7A8E0; /* Rosa pastel cálido */
-    color: white;
-    font-weight: bold;
-    width: 150px;
-    height: 40px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  margin-top: 20px;
+  background-color: #f7a8e0; /* Rosa pastel cálido */
+  color: white;
+  font-weight: bold;
+  width: 150px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #e580ce; /* Rosa más intenso al hacer hover */
+  background-color: #e580ce; /* Rosa más intenso al hacer hover */
 }

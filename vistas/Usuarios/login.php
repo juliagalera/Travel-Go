@@ -8,13 +8,10 @@
 
 </head>
 <body>
-    <nav>
-        <a id="nav" href="index.html">Inicio</a>
-        <a id="nav" href="contacto.html">Contacto</a>
-    </nav>
+<?php include('../../nav.php'); ?>
     <div id="contenedorLogo">
         <img id="logo" src="logo.png" alt="Logotipo Travel & Go">
-        <h1 class="TyG">TRAVEL & GO</h1>
+        <h1 class="TyG">TRAVEL & <span style="color:black;">GO</span>!</h1>
     </div>
     <fieldset>
         <form action="" method="post">
