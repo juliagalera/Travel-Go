@@ -33,10 +33,8 @@ $conn->query($sql);
 $sql = "CREATE TABLE IF NOT EXISTS lugares (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
-    descripción TEXT,
-    ubicacion VARCHAR(255),
-    imagen VARCHAR(255),
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    detalle TEXT,
+    imagen VARCHAR(255)
 )";
 $conn->query($sql);
 

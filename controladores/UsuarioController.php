@@ -73,7 +73,7 @@ class UsuarioController {
                 $_SESSION['usuario_id'] = $datosUsuario['id'];
                 $_SESSION['usuario_nombre'] = $datosUsuario['nombre'];
                 $_SESSION['email'] = $datosUsuario['email'];
-                echo "Inicio de sesión exitoso";
+                header("Location: /Travel-Go/vistas/principal-page.php");
             } else {
                 echo "Email o contraseña incorrectos";
             }

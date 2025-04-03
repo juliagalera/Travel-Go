@@ -70,6 +70,7 @@
         <h1>¡Registro exitoso!</h1>
         <p>Gracias por registrarte. Ahora puedes iniciar sesión.</p>
         <a href="/Travel-Go/vistas/Usuarios/login.php">Iniciar Sesión</a>
+
         <?php include('vistas/footer.php'); ?>
     </div>
 
@@ -77,7 +78,7 @@
         setTimeout(() => {
             document.getElementById('loader').style.display = 'none';
             document.getElementById('content').style.display = 'block';
-        }, 5000);
+        }, 1000);
     </script>
 </body>
 </html>

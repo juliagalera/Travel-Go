@@ -6,8 +6,8 @@
     <title>Document</title>
     <style>
         nav {
-            width: 100%;
-            height: 90px;
+            width: 1270px;
+            height: 50px;
             padding: 15px 0;
             background-color: #f7a8e0; /* Rosa pastel */
             display: flex;
@@ -15,10 +15,10 @@
             align-items: center;
             gap: 20px; /* Espacio entre los elementos */
             border-bottom: 1.5px solid black;
-            position: 
+            position: absolute;
             top: 0;
             left: 0;
-            z-index: 1000; /* Asegura que esté en la parte superior */
+            
         }
 
         nav a {
