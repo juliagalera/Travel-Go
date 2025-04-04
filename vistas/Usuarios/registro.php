@@ -16,7 +16,7 @@
     </div>
     
     <fieldset>
-        <form action="/Travel-Go/index.php?accion=registrarUsuario" method="post">
+        <form id="registroForm" action="/Travel-Go/index.php?action=registrarUsuario" method="post">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" autofocus><br><br>
 
@@ -32,15 +32,26 @@
             <label for="passwd2">Repita su contraseña:</label>
             <input type="password" id="passwd2" name="passwd2" ><br><br>
 
-            <div id="terminos">
-                <input type="checkbox" id="acepto" name="acepto" >
-                <label for="acepto">Acepto los <a href="terminos.html">términos y condiciones</a></label>
+            <div id="AceptarTerminos">
+                <input type="checkbox" id="terminos" name="terminos" >
+                <label for="terminos">Acepto los <a href="terminos.html">términos y condiciones</a></label>
             </div>
 
             <button type="submit">Registrarme</button>
         </form>
     </fieldset>
+    <script>
+    document.getElementById('registroForm').addEventListener('submit', function(event) {
+        const terminos = document.getElementById('terminos');
+        if (!terminos.checked) {
+            event.preventDefault(); 
+
+            alert('Debes aceptar los términos y condiciones para registrarte.');
+        }
+    });
+    </script>
     <?php
+
 include('../footer.php')?>
 </body>
 </html>

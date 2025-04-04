@@ -41,7 +41,7 @@
 </head>
 <body>
     <nav>
-        <a href="index.php">Inicio</a>
+        <a href="inicio.php">Inicio</a>
         <a href="contacto.html">Contacto</a>
     </nav>
 </body>

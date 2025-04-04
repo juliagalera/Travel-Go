@@ -37,45 +37,39 @@ class UsuarioController {
                 echo "La contraseña debe tener al menos 6 caracteres.";
                 return;
             }
-
             // Guardar el usuario en la base de datos
-            $hashedPasswd = password_hash($passwd1, PASSWORD_DEFAULT);
-            $usuario = new Usuario($this->conn, null, $nombre, $apellido, $email, $hashedPasswd);
+            $hashedPasswd = password_hash($passwd1, PASSWORD_BCRYPT);
+            $usuario = new Usuario($this->conn, null, $nombre, $email, $hashedPasswd, date('d-m-Y'));
 
-            if ($usuario->registrar()) {
-                // Redirigir a una página específica después del registro
-                header("Location: /Travel-Go/principal.php");
-                exit();
-            } else {
-                echo "Error al registrar el usuario.";
-            }
-        }
+            $usuario->registrar();
+
     }
 
-
+    }
     public function iniciarSesion() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $passwd = $_POST['passwd'];
 
             if (!$email || !$passwd) {
-                echo "Todos los campos deben estar llenos";
+                echo "<script>alert('Todos los campos deben estar llenos.')</script>";
                 return;
             }
 
             // Obtener el usuario por su email
             $usuario = new Usuario($this->conn);
             $datosUsuario = $usuario->obtenerUsuarioPorEmail($email);
+            
 
             // Verificar si el usuario existe y la contraseña es correcta
-            if ($datosUsuario && password_verify($passwd, $datosUsuario['password'])) {
+            if ($datosUsuario && $passwd === $datosUsuario['password']) {
                 session_start();
                 $_SESSION['usuario_id'] = $datosUsuario['id'];
                 $_SESSION['usuario_nombre'] = $datosUsuario['nombre'];
                 $_SESSION['email'] = $datosUsuario['email'];
                 header("Location: /Travel-Go/vistas/principal-page.php");
             } else {
-                echo "Email o contraseña incorrectos";
+                echo "<script>alert('Email o contraseña incorrectos')</script>";
             }
         }
     }

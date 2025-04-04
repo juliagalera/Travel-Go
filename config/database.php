@@ -68,5 +68,4 @@ $sql = "CREATE TABLE IF NOT EXISTS intereses_lugares (
 )";
 $conn->query($sql);
 
-$conn->close();
 ?>

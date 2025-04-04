@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <div class="container">
     <div class="seccion-carrusel">
         <div class="carrusel">
@@ -41,15 +42,15 @@ if (!isset($conn) || !$conn) {
     }
 }
 
-if (isset($_GET['accion'])) {
+if (isset($_GET['action'])) {
     $usuarioController = new UsuarioController($conn); 
-    $accion = htmlspecialchars($_GET['accion']); 
+    $accion = htmlspecialchars($_GET['action']); 
     echo($accion);
     switch ($accion) {
         case 'registrarUsuario':
             
             $usuarioController->registrarUsuario();
-            header('location: principal.php');
+            break;
 
         case 'iniciarSesion':
             

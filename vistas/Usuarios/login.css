@@ -50,8 +50,7 @@ fieldset {
 }
 
 /* Estilos para inputs */
-.mail,
-.psswd {
+input {
   width: 90%;
   height: 30px;
   margin: 10px 0;

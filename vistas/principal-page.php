@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal</title>
     <style>
-        /* General styles for the page */
 /* General styles for the page */
 body, html {
     font-family: Arial, sans-serif;
@@ -13,8 +12,9 @@ body, html {
     padding: 0;
     background-color: #f8f9fa; /* Fondo suave */
     color: #333; /* Texto oscuro */
-    height: 100%,
-    flex-direction: column;
+    height: 100%; /* Asegura altura completa */
+    display: flex;
+    flex-direction: column; /* Configura flexbox para la disposición vertical */
 }
 
 /* Encabezado principal */
@@ -85,20 +85,25 @@ h3 {
     opacity: 0.9;
 }
 
-/* Pie de página */
+/* Footer styles */
 footer {
+    width: 100%;
     text-align: center;
-    padding: 10px;
-    background-color: #e0e0e0; /* Gris claro */
-    color: #666;
+    padding: 15px 0;
+    background-color: #F7A8E0;
+    color: white;
+    margin-top: auto; /* Permite que el footer se ajuste automáticamente al final */
 }
+
+
+/* Pie de página */
 
 
     </style>
 </head>
 <body>
     <?php include('../nav.php');?>
-
+<main>
     <h1>Hay un camino para tí...</h1>
 
     <h3>¿Cuales son tus preferencias?</h3>
@@ -110,8 +115,8 @@ footer {
         <button onclick="toggleSelection(this, 'compras')">Compras</button>
         <button onclick="toggleSelection(this, 'deportes')">Deportes</button>
     </div>
-
-    <?php include('footer.php');?>
+    </main>
+    
 
     <script>
         // Array para rastrear las categorías seleccionadas
@@ -134,5 +139,6 @@ footer {
             console.log("Categorías seleccionadas:", selectedCategories);
         }
     </script>
+    <?php include('footer.php');?>
 </body>
 </html>

@@ -1,4 +1,6 @@
 <?php
+require_once('config\database.php');
+require_once('controladores\UsuarioController.php');
 class Usuario {
     private $conn;
     private $id;
@@ -7,13 +9,13 @@ class Usuario {
     private $email;
     private $passwd;
 
-    public function __construct($conn, $id = null, $nombre , $apellido, $email , $passwd) {
+    public function __construct($conn, $id = null, $nombre=null , $apellido= null, $email=null , $passwd=null) {
         $this->conn = $conn;
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->apellido = $apellido;
-        $this->email = $email;
-        $this->passwd = $passwd;
+        $this->id = $id ?? null;
+        $this->nombre = $_POST['nombre'] ?? null;
+        $this->apellido = $_POST['apellido'] ?? null;
+        $this->email = $_POST['email'] ?? null;
+        $this->passwd = $_POST['passwd1'] ?? null;
     }
 
 
@@ -31,9 +33,7 @@ class Usuario {
 
 
     public function autenticar($email, $passwd) {
-        if (!$this->conn) {
-            throw new Exception("La conexión a la base de datos no está inicializada.");
-        }
+
 
         $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE email = ?");
         $stmt->bind_param("s", $email);
@@ -56,15 +56,21 @@ class Usuario {
         $stmt->bind_param("s", $this->email);
         $stmt->execute();
         if ($stmt->get_result()->num_rows > 0) {
-            echo "El correo electrónico ya está registrado.";
+            echo "<script>alert('El correo electrónico ya está registrado.')</script>";
             return false;
-        }
+        }else{
 
         // Insertar usuario en la base de datos
-        $stmt = $this->conn->prepare("INSERT INTO usuarios (nombre, apellido, email, passwd) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $this->nombre, $this->apellido, $this->email, $this->passwd);
-        return $stmt->execute();
+        $stmt = $this->conn->prepare("INSERT INTO usuarios (id, nombre, email, password, fecha_registro) VALUES (?, ?, ?, ?, CURRENT_DATE)");
+        $stmt->bind_param("isss", $id, $this->nombre, $this->email, $this->passwd);
+        if($stmt->execute()){
+            header('location:/Travel-Go/principal.php');
+            exit();
+        }else{
+            echo"<script>alert('Error al registrar al usuario.')</script>";
+        }
     }
+}
 
 
     
@@ -92,7 +98,7 @@ class Usuario {
         $usuario = $resultado->fetch_assoc();
 
         if ($usuario) {
-            return new Usuario($this->conn, $usuario['id'], $usuario['nombre'], $usuario['email'], $usuario['passwd']);
+            return $usuario;
         }
         return null;
     }
