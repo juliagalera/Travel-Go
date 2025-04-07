@@ -27,6 +27,7 @@
         <h1>Ven a visitar Granada...</h1>
         <button id="iniciarSesion">Ya tengo cuenta</button>
         <button id="crearSesion">Aún no tengo cuenta</button>
+        <a href="inicio.php"> Aún no me quiero identificar</a>
     </div>
 </div>
 <?php

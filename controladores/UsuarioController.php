@@ -60,7 +60,9 @@ class UsuarioController {
             $usuario = new Usuario($this->conn);
             $datosUsuario = $usuario->obtenerUsuarioPorEmail($email);
             
-
+            if (!$datosUsuario){
+                echo "<script>alert('Usuario no registrado'</script>";
+            }
             // Verificar si el usuario existe y la contraseña es correcta
             if ($datosUsuario && $passwd === $datosUsuario['password']) {
                 session_start();

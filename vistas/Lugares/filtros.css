@@ -1,0 +1,156 @@
+/* Reset básico de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+h1,
+h2 {
+  color: #333;
+  font-weight: bold;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 2.5em;
+  color: #004d77;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.category {
+  background-color: #f7a8e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px; /* Garantiza una altura mínima para la tarjeta */
+  position: relative; /* Necesario para posicionar el enlace */
+}
+
+.category:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.category img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.category h2 {
+  margin-top: 15px;
+  font-size: 1.8em;
+  color: #333;
+}
+
+.category p {
+  color: #666;
+  font-size: 1.1em;
+  margin-top: 10px;
+  flex-grow: 1; /* Esto permite que el párrafo ocupe el espacio disponible */
+}
+
+.view-more {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: none;
+  position: absolute;
+  bottom: 20px; /* Fija el enlace en la parte inferior */
+  right: 20px; /* Fija el enlace a la derecha */
+}
+
+.view-more:hover {
+  text-decoration: underline;
+}
+
+footer {
+  background-color: #004d77;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 50px;
+}
+
+footer p {
+  font-size: 1em;
+}
+
+.select-category {
+  background-color: #004d77;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 20px 0;
+}
+
+.select-category select {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 5px 10px;
+  font-size: 1em;
+  border-radius: 5px;
+}
+
+.select-category select:focus {
+  outline: none;
+  border-color: #f3a847;
+}
+
+/* Estilos de Responsividad */
+@media (max-width: 768px) {
+  nav ul li {
+    margin: 0 10px;
+  }
+
+  .categories {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  .category {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.6em;
+  }
+
+  .category {
+    padding: 10px;
+  }
+
+  nav ul li {
+    margin: 0 8px;
+  }
+}
