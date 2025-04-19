@@ -5,124 +5,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal</title>
     <style>
-/* General styles for the page */
-body, html {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa; /* Fondo suave */
-    color: #333; /* Texto oscuro */
-    height: 100%; /* Asegura altura completa */
-    display: flex;
-    flex-direction: column; /* Configura flexbox para la disposición vertical */
-}
+        body, html {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        #sitios-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
 
-/* Encabezado principal */
-h1 {
-    text-align: center;
-    color: #444;
-    margin-top: 20px;
-}
+        .sitio {
+            display: none;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            text-align: center;
+        }
 
-h3 {
-    text-align: center;
-    color: #555;
-}
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-top: 20px;
+        }
 
-/* Div contenedor de los botones de filtro */
-.filter-buttons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 20px 0;
-}
+        h3 {
+            text-align: center;
+            color: #555;
+        }
 
-/* Estilos para los botones */
-.filter-buttons button {
-    border: 1px solid transparent;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
 
-/* Colores únicos para cada botón */
-.filter-buttons button:nth-child(1) {
-    background-color: #e3f2fd; /* Azul claro */
-    color: #0d47a1; /* Azul fuerte */
-    border-color: #90caf9; /* Borde azul */
-}
+        .filter-buttons button {
+            border: 1px solid transparent;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
 
-.filter-buttons button:nth-child(2) {
-    background-color: #fce4ec; /* Rosa claro */
-    color: #d81b60; /* Rosa fuerte */
-    border-color: #f48fb1; /* Borde rosa */
-}
+        .filter-buttons button:nth-child(1) {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+            border-color: #90caf9;
+        }
 
-.filter-buttons button:nth-child(3) {
-    background-color: #f1f8e9; /* Verde claro */
-    color: #33691e; /* Verde fuerte */
-    border-color: #aed581; /* Borde verde */
-}
+        .filter-buttons button:nth-child(2) {
+            background-color: #fce4ec;
+            color: #d81b60;
+            border-color: #f48fb1;
+        }
 
-.filter-buttons button:nth-child(4) {
-    background-color: #fff8e1; /* Amarillo claro */
-    color: #ff6f00; /* Naranja fuerte */
-    border-color: #ffd54f; /* Borde amarillo */
-}
+        .filter-buttons button:nth-child(3) {
+            background-color: #f1f8e9;
+            color: #33691e;
+            border-color: #aed581;
+        }
 
-.filter-buttons button:nth-child(5) {
-    background-color: #ede7f6; /* Morado claro */
-    color: #4a148c; /* Morado fuerte */
-    border-color: #b39ddb; /* Borde morado */
-}
+        .filter-buttons button:nth-child(4) {
+            background-color: #fff8e1;
+            color: #ff6f00;
+            border-color: #ffd54f;
+        }
 
-/* Efecto al pasar el ratón por encima */
-.filter-buttons button:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
-}
+        .filter-buttons button:nth-child(5) {
+            background-color: #ede7f6;
+            color: #4a148c;
+            border-color: #b39ddb;
+        }
 
-/* Footer styles */
-footer {
-    width: 100%;
-    text-align: center;
-    padding: 15px 0;
-    background-color: #F7A8E0;
-    color: white;
-    margin-top: auto; /* Permite que el footer se ajuste automáticamente al final */
-}
+        .filter-buttons button:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
 
+        #aceptar {
+            border: 1px solid transparent;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4d82be;
+            color: white;
+            transition: background-color 0.3s, transform 0.2s;
+        }
 
-/* Pie de página */
+        #aceptar:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
 
-
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            background-color: #F7A8E0;
+            color: white;
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
-    <?php include('../nav.php');?>
-<main>
-    <h1>Hay un camino para tí...</h1>
+    <?php include('../nav.php'); ?>
 
-    <h3>¿Cuales son tus preferencias?</h3>
+    <main>
+        <h1>Hay un camino para ti...</h1>
 
-    <div class="filter-buttons">
-        <button onclick="toggleSelection(this, 'parques')">Parques</button>
-        <button onclick="toggleSelection(this, 'cultura')">Cultura</button>
-        <button onclick="toggleSelection(this, 'gastronomia')">Gastronomía</button>
-        <button onclick="toggleSelection(this, 'compras')">Compras</button>
-        <button onclick="toggleSelection(this, 'deportes')">Deportes</button>
-    </div>
+        <h3>¿Cuáles son tus preferencias?</h3>
+
+        <div class="filter-buttons">
+            <button id="parques" onclick="toggleSelection(this, 'parques')">Parques</button>
+            <button id="cultura" onclick="toggleSelection(this, 'cultura')">Cultura</button>
+            <button id="gastronomia" onclick="toggleSelection(this, 'gastronomia')">Gastronomía</button>
+            <button id="compras" onclick="toggleSelection(this, 'compras')">Compras</button>
+            <button id="deportes" onclick="toggleSelection(this, 'deportes')">Deportes</button>
+        </div>
+        <div style="text-align:center;">
+            <button id="aceptar" onclick="mostrarLugares()">Ver lugares recomendados</button>
+        </div>
     </main>
-    
 
     <script>
-        // Array para rastrear las categorías seleccionadas
         let selectedCategories = [];
 
-        // Función para alternar selección
         function toggleSelection(button, category) {
             if (selectedCategories.includes(category)) {
                 // Si ya está seleccionado, eliminarlo
@@ -138,7 +162,19 @@ footer {
 
             console.log("Categorías seleccionadas:", selectedCategories);
         }
+parques= document.getElementById("parques");
+cultura= document.getElementById("cultura");
+compras= document.getElementById("compras");
+gastronomia= document.getElementById("gastronomia");
+deportes= document.getElementById("deportes");
+
+        function mostrarLugares(){
+            if parques.isSeelected {
+                
+            }
+        }
     </script>
-    <?php include('footer.php');?>
+    <?php include('footer.php'); ?>
 </body>
 </html>
+        

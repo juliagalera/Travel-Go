@@ -101,7 +101,7 @@ $lugares = [
     ['Basilica de San Juan de Dios', 'Una joya del barroco andaluz, la Basílica de San Juan de Dios impresiona con su rica decoración interior, sus retablos dorados y su arquitectura monumental. Más que una iglesia, es un testimonio de devoción artística y espiritual que transporta a quien la visita al esplendor del siglo XVIII granadino.', 'basilica.jpg', 'cultura'],
     ['Sierra de Huétor', 'Un paraíso natural a pocos kilómetros de la ciudad, el Parque Natural de la Sierra de Huétor ofrece rutas de senderismo, áreas recreativas y paisajes de montaña espectaculares. Ideal para desconectar, hacer deporte o simplemente respirar el aire puro de la sierra granadina.', 'huetor.jpg', 'parques'],
     ['Museo Casa de Lorca', 'En esta casa-museo situada en la Vega de Granada, los visitantes pueden sumergirse en el mundo del poeta Federico García Lorca. Conserva objetos personales, manuscritos y recuerdos que permiten comprender mejor su vida y su obra, en un entorno íntimo y emocional.', 'lorca.jpg', 'cultura'],
-    ['Carmen de los Mártires', 'Este rincón de Granada combina jardines románticos, estanques con cisnes y una villa señorial con vistas privilegiadas a la Alhambra y Sierra Nevada. Pasear por el Carmen de los Mártires es como entrar en un cuento lleno de paz, historia y belleza.', 'martires.jpg', 'cultura'],
+    ['Carmen de los Mártires', 'Este rincón de Granada combina jardines románticos, estanques con cisnes y una villa señorial con vistas privilegiadas a la Alhambra y Sierra Nevada. Pasear por el Carmen de los Mártires es como entrar en un cuento lleno de paz, historia y belleza.', 'martires.jpg', 'parques'],
     ['Restaurante Morayma', 'Ubicado en una casa morisca del Albaicín con vistas a la Alhambra, Morayma ofrece cocina granadina en un entorno encantador. Sus platos tradicionales, su ambiente sereno y su historia lo convierten en una experiencia gastronómica única.', 'morayma.jpg', 'gastronomia'],
     ['Sacromonte', 'Famoso por sus casas-cueva y su profunda vinculación con el flamenco, el Sacromonte es el alma gitana de Granada. Callejones empinados, espectáculos auténticos y una conexión directa con la historia viva de la ciudad hacen de este barrio un lugar imprescindible.', 'sacromonte.jpg', 'cultura'],
     ['Paseo de los Tristes', 'Con el río Darro a un lado y la Alhambra vigilante en lo alto, este paseo es uno de los más encantadores de Granada. Antiguo centro de celebraciones populares, hoy ofrece terrazas con encanto y una de las postales más icónicas de la ciudad.', 'tristes.jpg', 'cultura'],
@@ -122,19 +122,19 @@ $lugares = [
 
 
 foreach ($lugares as $lugar) {
-   if (isset($lugar[0]) && isset($lugar[1]) && isset($lugar[2]) && isset($lugar[3])) {
-    // Proceder con la inserción si todas las claves están presentes
-    $nombre = $lugar[0];
-    $detalle = $lugar[1];
-    $imagen = $lugar[2];
-    $categoria = $lugar[3];
-
-    $stmt = $conn->prepare("INSERT IGNORE INTO lugares (nombre, detalle, imagen, categoria) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $nombre, $detalle, $imagen, $categoria);
+    // Comprobar si el lugar ya existe en la base de datos
+    $stmt = $conn->prepare("SELECT id FROM lugares WHERE nombre = ?");
+    $stmt->bind_param("s", $lugar[0]);
     $stmt->execute();
-}else{
-    echo "Faltan datos en el array para el lugar: " . json_encode($lugar);
-}
+    $stmt->store_result();
+    
+    if ($stmt->num_rows == 0) {
+        // Si no existe, insertar el nuevo lugar
+        $stmt = $conn->prepare("INSERT INTO lugares (nombre, detalle, imagen, categoria) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $lugar[0], $lugar[1], $lugar[2], $lugar[3]);
+        $stmt->execute();
+    }
+    $stmt->close();
 }
 
 

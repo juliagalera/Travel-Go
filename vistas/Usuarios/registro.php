@@ -8,7 +8,7 @@
 </head>
 <body>
     
-<?php include('../../nav.php')
+<?php include('../../nav.php');
 ?>
     <div id="contenedorLogo">
         <img id="logo" src="logo.png" alt="Logotipo Travel & Go">
