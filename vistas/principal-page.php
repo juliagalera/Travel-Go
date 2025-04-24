@@ -147,30 +147,31 @@
     <script>
         let selectedCategories = [];
 
+
         function toggleSelection(button, category) {
             if (selectedCategories.includes(category)) {
                 // Si ya está seleccionado, eliminarlo
                 selectedCategories = selectedCategories.filter(item => item !== category);
                 button.style.backgroundColor = ""; // Restablecer el estilo
-            } else if (selectedCategories.length < 3) {
+            } else if (selectedCategories.length < 1 ) {
                 // Si el número de selecciones es menor al máximo, agregarlo
                 selectedCategories.push(category);
                 button.style.backgroundColor = "#bbdefb"; // Marcar el botón como seleccionado
             } else {
-                alert("Puedes seleccionar hasta 3 categorías.");
+                alert("Solo puedes seleccionar 1 categoría.");
             }
 
             console.log("Categorías seleccionadas:", selectedCategories);
         }
-parques= document.getElementById("parques");
-cultura= document.getElementById("cultura");
-compras= document.getElementById("compras");
-gastronomia= document.getElementById("gastronomia");
-deportes= document.getElementById("deportes");
+    let parques = document.getElementById("parques");
+    let cultura = document.getElementById("cultura");
+    let compras = document.getElementById("compras");
+    let gastronomia = document.getElementById("gastronomia");
+    let deportes = document.getElementById("deportes");
 
         function mostrarLugares(){
-            if parques.isSeelected {
-                
+            if (parques.isSelected()){
+                window.location.href = "/Travel-Go/vistas/Lugares/parques.php";
             }
         }
     </script>
