@@ -16,6 +16,7 @@
     </div>
     
     <fieldset>
+    <legend><strong>Registro</strong></legend>
         <form id="registroForm" action="/Travel-Go/index.php?action=registrarUsuario" method="post">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" autofocus><br><br>

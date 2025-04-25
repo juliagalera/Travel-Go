@@ -142,6 +142,7 @@
         <div style="text-align:center;">
             <button id="aceptar" onclick="mostrarLugares()">Ver lugares recomendados</button>
         </div>
+        <p id="error"></p>
     </main>
 
     <script>
@@ -169,11 +170,22 @@
     let gastronomia = document.getElementById("gastronomia");
     let deportes = document.getElementById("deportes");
 
-        function mostrarLugares(){
-            if (parques.isSelected()){
-                window.location.href = "/Travel-Go/vistas/Lugares/parques.php";
-            }
-        }
+    function mostrarLugares() {
+    if (selectedCategories.includes("parques")) {
+        window.location.href = "/Travel-Go/vistas/Lugares/parques.php";
+    } else if (selectedCategories.includes("cultura")) {
+        window.location.href = "/Travel-Go/vistas/Lugares/cultura.php";
+    } else if (selectedCategories.includes("compras")) {
+        window.location.href = "/Travel-Go/vistas/Lugares/compras.php";
+    } else if (selectedCategories.includes("gastronomia")) {
+        window.location.href = "/Travel-Go/vistas/Lugares/gastronomia.php";
+    } else if (selectedCategories.includes("deportes")) {
+        window.location.href = "/Travel-Go/vistas/Lugares/deportes.php";
+    } else {
+        document.getElementById("error").innerHTML = "<p style='color:red; margin-left:330px;'>Selecciona algún filtro, o visita nuestra página principal para ver todas las categorías.</p>";
+    }
+}
+
     </script>
     <?php include('footer.php'); ?>
 </body>

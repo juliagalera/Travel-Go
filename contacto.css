@@ -2,7 +2,7 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  background-color: white;
+  background-color: white; /* Fondo blanco */
   margin: 0;
   padding: 0;
   display: flex;
@@ -18,41 +18,43 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  margin-top: 10px;
-  gap: 10px;
+  margin-top: 20px;
+  gap: 15px;
+  margin-right: 50px;
 }
 
 #logo {
-  height: 70px;
+  height: 80px;
   width: auto;
 }
 
 .TyG {
-  font-size: 30px;
-  font-weight: bold;
+  font-size: 34px;
+  font-weight: bolder;
   color: #f7a8e0;
+  margin: 0;
 }
 
-/* Formulario */
+/* Estilos para el formulario */
 fieldset {
   border-radius: 10px;
   border: 2px solid #f7a8e0;
-  padding: 15px;
-  width: 380px;
-  margin: 20px auto;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 400px;
+  margin: 30px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Inputs y textarea más compactos */
+/* Estilos para los inputs y textarea */
 input,
 textarea {
-  width: 95%;
+  width: 90%;
   height: 30px;
-  margin: 5px 0;
+  margin: 10px 0;
   padding: 5px;
   border: 1px solid #f7a8e0;
   border-radius: 5px;
@@ -61,39 +63,32 @@ textarea {
 }
 
 textarea {
-  height: 70px;
+  height: 80px;
   resize: none;
 }
 
-/* Alineación del checkbox con su texto */
-
+/* Ajuste para el checkbox y su alineación */
 #recordar {
+  margin-top: 10px;
   display: flex;
-  align-items: center; /* Asegura que estén alineados verticalmente */
-  flex-direction: row; /* Disposición en fila */
-  gap: 5px; /* Espacio entre checkbox y texto */
-  width: auto; /* Ajuste dinámico */
-  margin-left: -50px;
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  align-items: center;
+  gap: 5px;
 }
 
 #recordar input {
-  width: 16px; /* Tamaño del checkbox */
-  height: 16px;
-  margin: 0;
-  cursor: pointer;
+  width: auto;
 }
 
-/* Botón ajustado */
+/* Estilos para el botón */
 button {
-  margin-top: 15px;
+  margin-top: 20px;
   background-color: #f7a8e0;
   color: white;
   font-weight: bold;
-  width: 140px;
-  height: 38px;
+  width: 150px;
+  height: 40px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
 }

@@ -1,58 +1,108 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-       nav {
-            width: 100%;
-            height: 70px; /* Ajusta el tamaño según lo que necesites */
-            padding: 15px 0;
-            background-color: #f7a8e0; /* Rosa pastel */
-            display: flex;
-            justify-content: center; /* Centra los enlaces */
-            align-items: center;
-            gap: 20px; /* Espacio entre los enlaces */
-            border-bottom: 1.5px solid black;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
 
-        nav img {
-            height: 50px; /* Aumenta el tamaño del logo */
-            position: absolute; /* Permite que el logo esté fuera del flujo del flexbox */
-            left: 20px; /* Espacio a la izquierda del logo */
-            top: 50%; /* Centra verticalmente */
-            transform: translateY(-50%); /* Asegura que se centre correctamente */
-            background: none; /* Asegura que no haya fondo */
-        }
+    nav {
+      width: 100%;
+      height: 70px;
+      background-color: #f7a8e0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px; 
+      border-bottom: 1.5px solid black;
+      box-sizing: border-box;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000; 
+    }
+    
 
-        nav a {
-            text-decoration: none;
-            color: black;
-            font-size: 18px;
-            font-weight: bold;
-            transition: color 0.3s ease; /* Transición suave para hover */
-        }
+    .left-section,
+    .right-section {
+      width: 150px;
+    }
+    
 
-        nav a:hover {
-            color: azure;
-        }
+    .center-links {
+      flex: 1;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
 
-        body {
-            padding-top: 80px;
-        }
-    </style>
+    .left-section img {
+      height: 50px;
+    }
+
+    .center-links a {
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    
+    .center-links a:hover {
+      color: azure;
+    }
+    
+    .right-section a {
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 5px 10px;
+      background-color: white;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    .right-section a:hover {
+      background-color: #e580ce;
+      color: white;
+    }
+    body {
+      padding-top: 80px;
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <img src="/Travel-Go/vistas/Usuarios/logo.png" alt="Logo">
-        <a href="/Travel-Go/inicio.php">Inicio</a>
-        <a href="/Travel-Go/contacto.php">Contacto</a>
-        <a href="/Travel-Go/vistas/Usuarios/registro.php">Registro</a>
-        <a href="/Travel-Go/vistas/Usuarios/login.php">Iniciar sesión </a>
-    </nav>
+  <nav>
+    <div class="left-section">
+      <img src="/Travel-Go/vistas/Usuarios/logo.png" alt="Logo">
+    </div>
+    <div class="center-links">
+      <a href="/Travel-Go/inicio.php">Inicio</a>
+      <a href="/Travel-Go/contacto.php">Contacto</a>
+      <a href="/Travel-Go/vistas/Usuarios/registro.php">Registro</a>
+    </div>
+    <div class="right-section">
+      <?php
+        if (isset($_SESSION['usuario_id'])) {
+            echo '<a href="/Travel-Go/vistas/Usuarios/perfil.php">Mi Perfil</a>';
+        } else {
+            echo '<a href="/Travel-Go/vistas/Usuarios/login.php">Iniciar sesión</a>';
+        }
+      ?>
+    </div>
+  </nav>
+
 </body>
 </html>

@@ -12,38 +12,39 @@ class UsuarioController {
     public function registrarUsuario() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Validación de datos
-            $nombre = htmlspecialchars($_POST['nombre']);
+            $nombre   = htmlspecialchars($_POST['nombre']);
             $apellido = htmlspecialchars($_POST['apellido']);
-            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-            $passwd1 = $_POST['passwd1'];
-            $passwd2 = $_POST['passwd2'];
-
+            $email    = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+            $passwd1  = $_POST['passwd1'];
+            $passwd2  = $_POST['passwd2'];
+    
             if (empty($nombre) || empty($apellido) || empty($email) || empty($passwd1) || empty($passwd2)) {
-                echo "<script>alert('Todos los campos son obligatorios.')</script>";
+                echo "<script>alert('Todos los campos son obligatorios.');</script>";
                 return;
             }
-
+    
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                echo "<script>alert('El correo electrónico no es válido.)</script>";
+                echo "<script>alert('El correo electrónico no es válido.');</script>";
                 return;
             }
-
+    
             if ($passwd1 !== $passwd2) {
-                echo "<script>alert('Las contraseñas no coinciden.')</script>";
+                echo "<script>alert('Las contraseñas no coinciden.');</script>";
                 return;
             }
-
+    
             if (strlen($passwd1) < 6) {
-                echo "La contraseña debe tener al menos 6 caracteres.";
+                echo "<script>alert('La contraseña debe tener al menos 6 caracteres.');</script>";
                 return;
             }
-            // Guardar el usuario en la base de datos
+    
+            // Encriptar la contraseña antes de guardarla.
             $hashedPasswd = password_hash($passwd1, PASSWORD_BCRYPT);
             $usuario = new Usuario($this->conn, null, $nombre, $email, $hashedPasswd, date('d-m-Y'));
-
+    
             $usuario->registrar();
-
-    }
+        }
+    
 
     }
     public function iniciarSesion() {
