@@ -62,7 +62,7 @@ class Usuario {
 
         // Insertar usuario en la base de datos
         $stmt = $this->conn->prepare("INSERT INTO usuarios (id, nombre, email, password, fecha_registro) VALUES (?, ?, ?, ?, CURRENT_DATE)");
-        $stmt->bind_param("isss", $id, $this->nombre, $this->email, $this->passwd);
+        $stmt->bind_param("isss", $this->id, $this->nombre, $this->email, $this->passwd);
         if($stmt->execute()){
             header('location:/Travel-Go/principal.php');
             exit();
@@ -135,5 +135,35 @@ class Usuario {
     public function mostrarInformacionUsuario() {
         echo "ID: " . $this->id . ", Nombre: " . $this->nombre . ", Email: " . $this->email;
     }
+    public function actualizarPerfil($nuevoNombre, $nuevoApellido, $nuevoEmail, $nuevaPasswd = null) {
+        if (!$this->conn) {
+            throw new Exception("La conexión a la base de datos no está inicializada.");
+        }
+    
+        if ($nuevaPasswd) {
+            $passwdHash = password_hash($nuevaPasswd, PASSWORD_BCRYPT);
+            $stmt = $this->conn->prepare("UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, passwd = ? WHERE id = ?");
+            $stmt->bind_param("ssssi", $nuevoNombre, $nuevoApellido, $nuevoEmail, $passwdHash, $this->id);
+        } else {
+            $stmt = $this->conn->prepare("UPDATE usuarios SET nombre = ?, apellido = ?, email = ? WHERE id = ?");
+            $stmt->bind_param("sssi", $nuevoNombre, $nuevoApellido, $nuevoEmail, $this->id);
+        }
+    
+        if ($stmt->execute()) {
+            // Actualizar valores en el objeto
+            $this->nombre = $nuevoNombre;
+            $this->apellido = $nuevoApellido;
+            $this->email = $nuevoEmail;
+    
+            if ($nuevaPasswd) {
+                $this->passwd = $passwdHash;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
 }
 ?>

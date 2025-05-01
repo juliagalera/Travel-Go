@@ -32,8 +32,8 @@
 </div>
 <?php
 
-require_once 'config/database.php';
-require_once 'controladores/UsuarioController.php';
+require 'config/database.php';
+require 'controladores/UsuarioController.php';
 
 // Inicializar la conexión a la base de datos
 if (!isset($conn) || !$conn) {

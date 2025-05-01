@@ -1,25 +1,17 @@
 <?php
 
-$archivo ='C:\xampp\htdocs\Travel-Go\config\database.php';
-echo "Intentando cargar: " . $archivo . "<br>";
-
-if (!file_exists($archivo)) {
-    die("Archivo no encontrado en: " . realpath($archivo));
-} else {
-    echo "Archivo encontrado, procediendo a incluirlo.";
-}
-
-require_once $archivo;
-
-// require_once 'C:\xampp\htdocs\Travel-Go\config\database.php';
-// require_once 'C:\xampp\htdocs\Travel-Go\modelos\usuario.php';
-
+// Asegúrate de que no haya salida antes de session_start()
 session_start();
 
+// Cambia las rutas a rutas relativas si es necesario
+require_once ('C:/xampp/htdocs/Travel-Go/config/database.php');
+require_once ('C:/xampp/htdocs/Travel-Go/modelos/usuario.php');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre               = trim($_POST['nombre']);
-    $email                = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-    $nueva_contrasena     = trim($_POST['nueva_contrasena']);
+    // Sanitizar y validar entradas
+    $nombre = trim($_POST['nombre']);
+    $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+    $nueva_contrasena = trim($_POST['nueva_contrasena']);
     $confirmar_contrasena = trim($_POST['confirmar_contrasena']);
 
     if (empty($nombre) || empty($email)) {
@@ -32,29 +24,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Validar contraseña solo en caso de que se ingrese algún dato
-    if (($nueva_contrasena !== '' || $confirmar_contrasena !== '') && $nueva_contrasena !== $confirmar_contrasena) {
-        echo '<p style="color:red; text-align:center;">Las contraseñas no coinciden.</p>';
-        exit;
-    }
+    // Validar contraseña solo si se proporciona
+    if (!empty($nueva_contrasena) || !empty($confirmar_contrasena)) {
+        if ($nueva_contrasena !== $confirmar_contrasena) {
+            echo '<p style="color:red; text-align:center;">Las contraseñas no coinciden.</p>';
+            exit;
+        }
 
-    $nuevoHash = null;
-    if (!empty($nueva_contrasena) && !empty($confirmar_contrasena)) {
         if (strlen($nueva_contrasena) < 6) {
             echo '<p style="color:red; text-align:center;">La contraseña debe tener al menos 6 caracteres.</p>';
             exit;
         }
+    }
+
+    // Generar el hash de la nueva contraseña si se proporciona
+    $nuevoHash = null;
+    if (!empty($nueva_contrasena)) {
         $nuevoHash = password_hash($nueva_contrasena, PASSWORD_BCRYPT);
     }
 
-    // Se crea el objeto Usuario usando el ID almacenado en la sesión
-    $usuario = new Usuario($conn, $_SESSION['usuario_id'], $nombre, $email, null, null);
+    // Verificar si la sesión contiene el ID del usuario
+    if (!isset($_SESSION['usuario_id'])) {
+        echo '<p style="color:red; text-align:center;">La sesión ha expirado. Por favor, inicia sesión nuevamente.</p>';
+        exit;
+    }
 
-    // Se asume que el método actualizarPerfil($nuevoHash) actualiza el nombre, email y, si $nuevoHash no es null, la contraseña.
-    if ($usuario->actualizarPerfil($nuevoHash)) {
-        // Actualizar las variables de sesión y redirigir a la página de perfil
+    // Crear objeto Usuario
+    $usuario_id = $_SESSION['usuario_id'];
+    $usuario = new Usuario($conn, $usuario_id, $nombre, $email, null, null);
+
+    // Actualizar perfil
+    if ($usuario->actualizarPerfil($nombre, $apellido, $email, $nuevoHash)) {
+        // Actualizar variables de sesión
         $_SESSION['usuario_nombre'] = $nombre;
-        $_SESSION['email']          = $email;
+        $_SESSION['email'] = $email;
+
+        // Redirigir al perfil
         header("Location: perfil.php");
         exit;
     } else {

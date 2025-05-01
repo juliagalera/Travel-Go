@@ -1,6 +1,6 @@
 <?php
 // Cargar la configuración de la base de datos
-require_once 'config/database.php';
+require 'config/database.php';
 require_once 'controladores/UsuarioController.php';
 require_once 'controladores/RutasController.php';
 require_once 'controladores/ReseñaController.php';

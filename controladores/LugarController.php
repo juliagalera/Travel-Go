@@ -1,6 +1,6 @@
 <?php
-require_once 'config/database.php';
-require_once 'modelos\lugar.php';
+require 'config/database.php';
+require 'modelos\lugar.php';
 
 class LugarController {
 

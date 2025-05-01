@@ -1,6 +1,6 @@
 <?php
-require_once 'config/database.php';
-require_once 'modelos/usuario.php';
+require 'config/database.php';
+require 'modelos/usuario.php';
 
 class UsuarioController {
     private $conn;
