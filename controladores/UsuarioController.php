@@ -1,6 +1,7 @@
 <?php
-require 'config/database.php';
-require 'modelos/usuario.php';
+require_once(__DIR__ . '/../config/database.php');
+
+require_once(__DIR__ . '/../modelos/usuario.php');
 
 class UsuarioController {
     private $conn;

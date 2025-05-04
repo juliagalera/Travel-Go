@@ -1,73 +1,171 @@
 <?php
-
-// Asegúrate de que no haya salida antes de session_start()
 session_start();
 
-// Cambia las rutas a rutas relativas si es necesario
-require_once ('C:/xampp/htdocs/Travel-Go/config/database.php');
-require_once ('C:/xampp/htdocs/Travel-Go/modelos/usuario.php');
+require_once(__DIR__ . '/../../config/database.php');
+require_once(__DIR__ . '/../../modelos/usuario.php');
 
+// Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: /Travel-Go/login.php");
+    exit;
+}
+
+$usuario_id = $_SESSION['usuario_id'];
+
+// Obtener datos actuales del usuario desde la BD
+$usuario = Usuario::obtenerPorId($conn, $usuario_id); // Método que debes tener en tu clase Usuario
+if (!$usuario) {
+    echo "<p style='color:red; text-align:center;'>No se pudo cargar la información del usuario.</p>";
+    exit;
+}
+
+// Si se envió el formulario de actualización
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitizar y validar entradas
     $nombre = trim($_POST['nombre']);
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
     $nueva_contrasena = trim($_POST['nueva_contrasena']);
     $confirmar_contrasena = trim($_POST['confirmar_contrasena']);
 
+    // Validaciones
     if (empty($nombre) || empty($email)) {
-        echo '<p style="color:red; text-align:center;">El nombre y el email son obligatorios.</p>';
-        exit;
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo '<p style="color:red; text-align:center;">El email no es válido.</p>';
-        exit;
-    }
-
-    // Validar contraseña solo si se proporciona
-    if (!empty($nueva_contrasena) || !empty($confirmar_contrasena)) {
+        $error = "El nombre y el email son obligatorios.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "El email no es válido.";
+    } elseif (!empty($nueva_contrasena) || !empty($confirmar_contrasena)) {
         if ($nueva_contrasena !== $confirmar_contrasena) {
-            echo '<p style="color:red; text-align:center;">Las contraseñas no coinciden.</p>';
-            exit;
-        }
-
-        if (strlen($nueva_contrasena) < 6) {
-            echo '<p style="color:red; text-align:center;">La contraseña debe tener al menos 6 caracteres.</p>';
-            exit;
+            $error = "Las contraseñas no coinciden.";
+        } elseif (strlen($nueva_contrasena) < 6) {
+            $error = "La contraseña debe tener al menos 6 caracteres.";
         }
     }
 
-    // Generar el hash de la nueva contraseña si se proporciona
-    $nuevoHash = null;
-    if (!empty($nueva_contrasena)) {
-        $nuevoHash = password_hash($nueva_contrasena, PASSWORD_BCRYPT);
+    // Si no hay errores, actualizar
+    if (!isset($error)) {
+        $nuevoHash = !empty($nueva_contrasena) ? password_hash($nueva_contrasena, PASSWORD_BCRYPT) : null;
+
+        $usuarioObj = new Usuario($conn, $usuario_id, $nombre, $email, null, null);
+        $actualizado = $usuarioObj->actualizarPerfil($nombre, $usuario['apellido'], $email, $nuevoHash);
+
+        if ($actualizado) {
+            $_SESSION['usuario_nombre'] = $nombre;
+            $_SESSION['email'] = $email;
+            header("Location: perfil.php");
+            exit;
+        } else {
+            $error = "Error al actualizar el perfil.";
+        }
     }
-
-    // Verificar si la sesión contiene el ID del usuario
-    if (!isset($_SESSION['usuario_id'])) {
-        echo '<p style="color:red; text-align:center;">La sesión ha expirado. Por favor, inicia sesión nuevamente.</p>';
-        exit;
-    }
-
-    // Crear objeto Usuario
-    $usuario_id = $_SESSION['usuario_id'];
-    $usuario = new Usuario($conn, $usuario_id, $nombre, $email, null, null);
-
-    // Actualizar perfil
-    if ($usuario->actualizarPerfil($nombre, $apellido, $email, $nuevoHash)) {
-        // Actualizar variables de sesión
-        $_SESSION['usuario_nombre'] = $nombre;
-        $_SESSION['email'] = $email;
-
-        // Redirigir al perfil
-        header("Location: perfil.php");
-        exit;
-    } else {
-        echo '<p style="color:red; text-align:center;">Error al actualizar el perfil.</p>';
-        exit;
-    }
-} else {
-    header("Location: perfil.php");
-    exit;
 }
 ?>
+
+<?php include_once(__DIR__ . '/../../nav.php'); ?>
+
+<main style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+    <h2 style="text-align: center; color: #e91e63;">Mi Perfil</h2>
+
+    <p style="text-align: center;">Hola, <strong><?= htmlspecialchars($usuario['nombre']) ?></strong> 👋</p>
+
+    <?php if (isset($_GET['editar']) || $_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+        <?php if (isset($error)): ?>
+            <p style="color: red; text-align: center;"><?= $error ?></p>
+        <?php endif; ?>
+
+        <form method="post" style="display: flex; flex-direction: column; gap: 1rem; padding: 1rem;">
+            <label>Nombre:
+                <input type="text" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>
+            </label>
+            <label>Email:
+                <input type="email" name="email" value="<?= htmlspecialchars($usuario['email']) ?>" required>
+            </label>
+            <label>Nueva contraseña:
+                <input type="password" name="nueva_contrasena" placeholder="Opcional">
+            </label>
+            <label>Confirmar contraseña:
+                <input type="password" name="confirmar_contrasena" placeholder="Opcional">
+            </label>
+            <button type="submit" style="background-color: #e91e63; color: white; padding: 0.5rem;">Guardar cambios</button>
+            <a href="perfil.php" style="text-align:center; color: #555;">Cancelar</a>
+        </form>
+    <?php else: ?>
+        <div style="text-align: center; padding: 1rem;">
+            <p><strong>Nombre:</strong> <?= htmlspecialchars($usuario['nombre']) ?></p>
+            <p><strong>Email:</strong> <?= htmlspecialchars($usuario['email']) ?></p>
+            <a href="perfil.php?editar=1" style="display:inline-block; margin-top:1rem; padding:0.5rem 1rem; background:#e91e63; color:white; border-radius:5px;">Editar perfil</a>
+        </div>
+    <?php endif; ?>
+</main>
+
+<?php include_once('../footer.php'); ?>
+<style>
+    body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fdfdfd;
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    color: #444;
+}
+
+form input {
+    margin-top: 0.3rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border 0.3s;
+}
+
+form input:focus {
+    border-color: #e91e63;
+    outline: none;
+}
+
+form button {
+    background-color: #e91e63;
+    color: white;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #d81b60;
+}
+
+form a {
+    text-align: center;
+    color: #777;
+    text-decoration: none;
+    margin-top: 0.5rem;
+}
+
+form a:hover {
+    color: #e91e63;
+}
+</style>
