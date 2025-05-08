@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión</title>
     <link rel="stylesheet" href="login.css">
-
 </head>
 <body>
 <?php include('../../nav.php'); ?>
@@ -22,9 +22,8 @@
             <input type="checkbox" name="recordar" id="recordar">Mantener sesión iniciada<br><br>
             <button id="login" type="submit">Iniciar sesión</button>
         </form>
-
     </fieldset>
-<?php
-include('../footer.php')?>
+    
+<?php include('../footer.php') ?>
 </body>
 </html>

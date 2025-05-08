@@ -1,8 +1,7 @@
-/* Estilos generales para el cuerpo */
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  background-color: white; /* Fondo blanco */
+  background-color: white;
   margin: 0;
   padding: 0;
   display: flex;
@@ -12,7 +11,6 @@ body {
   height: 100vh;
 }
 
-/* Estilos para el contenedor del logo */
 #contenedorLogo {
   display: flex;
   justify-content: center;
@@ -35,7 +33,6 @@ body {
   margin: 0;
 }
 
-/* Estilos para el formulario */
 fieldset {
   border-radius: 10px;
   border: 2px solid #f7a8e0;
@@ -49,7 +46,6 @@ fieldset {
   align-items: center;
 }
 
-/* Estilos para los inputs y textarea */
 input,
 textarea {
   width: 90%;
@@ -67,7 +63,6 @@ textarea {
   resize: none;
 }
 
-/* Ajuste para el checkbox y su alineación */
 #recordar {
   margin-top: 10px;
   display: flex;
@@ -79,7 +74,6 @@ textarea {
   width: auto;
 }
 
-/* Estilos para el botón */
 button {
   margin-top: 20px;
   background-color: #f7a8e0;

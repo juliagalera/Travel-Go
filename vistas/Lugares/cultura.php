@@ -2,27 +2,37 @@
 
 require('C:/xampp/htdocs/Travel-Go/config/database.php');
 
-$category = isset($_GET['categoria']) ? $_GET['categoria'] : 'Cultura';
+$category = isset($_GET['categoria']) ? mysqli_real_escape_string($conn, $_GET['categoria']) : 'Cultura';
+
+$categoriasValidas = ['Deportes', 'Cultura', 'Gastronomia', 'Compras', 'Parques'];
+if (!in_array($category, $categoriasValidas)) {
+    echo "Categoría no válida.";
+    exit;
+}
 
 $query = "SELECT * FROM lugares WHERE categoria = '$category'";
 $result = mysqli_query($conn, $query);
 
-$limite = 50; // Límite de caracteres para la descripción
+if (!$result) {
+    die("Error en la consulta: " . mysqli_error($conn));
+}
+
+$limite = 50;
 
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $category; ?> - Granada</title>
+    <title><?php echo htmlspecialchars($category); ?> - Granada</title>
     <link rel="stylesheet" href="filtros.css">
 </head>
 <body>
     <?php include('../../nav.php');?>
 
-    <h1>Lugares de <?php echo $category; ?> en Granada</h1>
+    <h1>Lugares de <?php echo htmlspecialchars($category); ?> en Granada</h1>
 
     <section class="categories">
         <?php
@@ -30,22 +40,26 @@ $limite = 50; // Límite de caracteres para la descripción
             while ($row = mysqli_fetch_assoc($result)) {
                 // Recortar la descripción
                 $descripcionCorta = substr($row['detalle'], 0, $limite); 
+                if (strlen($row['detalle']) > $limite) {
+                    $descripcionCorta .= '...'; 
+                }
 
                 echo '<div class="category">';
-                echo '<img src="../../img/' . $row['imagen'] . '" alt="' . $row['nombre'] . '" />';
-                echo '<h2>' . $row['nombre'] . '</h2>';
-                // Mostrar solo la descripción recortada
-                echo '<p>' . $descripcionCorta . '...</p>';
+                echo '<img src="../../img/' . htmlspecialchars($row['imagen']) . '" alt="' . htmlspecialchars($row['nombre']) . '" />';
+                echo '<h2>' . htmlspecialchars($row['nombre']) . '</h2>';
+                echo '<p>' . htmlspecialchars($descripcionCorta) . '</p>';
                 ?>
                 
                 <a href='ver_lugar.php?id=<?php echo urlencode($row["id"]); ?>'>Ver más</a>
-<?php
+                <?php
 
                 echo '</div>';
             }
         } else {
             echo '<p>No hay lugares disponibles en esta categoría.</p>';
         }
+
+        mysqli_close($conn);
         ?>
     </section>
 

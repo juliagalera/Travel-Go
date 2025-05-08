@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,15 +27,28 @@
         <h1>Ven a visitar Granada...</h1>
         <button id="iniciarSesion">Ya tengo cuenta</button>
         <button id="crearSesion">Aún no tengo cuenta</button>
-        <a href="inicio.php"> Aún no me quiero identificar</a>
+        <a href="inicio.php">Aún no me quiero identificar</a>
     </div>
 </div>
+
 <?php
 
 require 'config/database.php';
 require 'controladores/UsuarioController.php';
 
-// Inicializar la conexión a la base de datos
+session_start();
+
+if (isset($_COOKIE['usuario_recordado']) && !isset($_SESSION['email'])) {
+    $usuario = new Usuario($conn);
+    $datosUsuario = $usuario->obtenerUsuarioPorEmail($_COOKIE['usuario_recordado']);
+
+    if ($datosUsuario) {
+        $_SESSION['usuario_id'] = $datosUsuario['id'];
+        $_SESSION['usuario_nombre'] = $datosUsuario['nombre'];
+        $_SESSION['email'] = $datosUsuario['email'];
+    }
+}
+
 if (!isset($conn) || !$conn) {
     $conn = new mysqli('localhost', 'root', '', 'travel_go');
     if ($conn->connect_error) {
@@ -49,22 +62,18 @@ if (isset($_GET['action'])) {
     echo($accion);
     switch ($accion) {
         case 'registrarUsuario':
-            
             $usuarioController->registrarUsuario();
             break;
 
         case 'iniciarSesion':
-            
             $usuarioController->iniciarSesion();
             break;
 
         case 'listarUsuarios':
-            
             $usuarioController->listarUsuarios();
             break;
 
         case 'eliminarUsuario':
-            
             $usuarioController->eliminarUsuario();
             break;
 
@@ -96,11 +105,7 @@ if (isset($_GET['action'])) {
             break;
     }
 } 
-
-
-
 ?>
-
 
 <script>
 const carrusel = document.querySelector('.carrusel');
@@ -111,24 +116,20 @@ const nextButton = document.querySelector('.next');
 let index = 0;
 const intervalTime = 3000;
 
-// Función para mostrar la imagen actual
 function showImage() {
     carrusel.style.transform = `translateX(-${index * 100}%)`;
 }
 
-// Avanzar a la siguiente imagen
 function nextImage() {
     index = (index + 1) % images.length; 
     showImage();
 }
 
-// Retroceder a la imagen anterior
 function prevImage() {
     index = (index - 1 + images.length) % images.length; 
     showImage();
 }
 
-// Cambio automático de imágenes
 let autoSlide = setInterval(nextImage, intervalTime);
 
 nextButton.addEventListener('click', () => {
@@ -143,11 +144,11 @@ prevButton.addEventListener('click', () => {
     autoSlide = setInterval(nextImage, intervalTime);
 });
 
-document.getElementById("iniciarSesion").addEventListener('click', () =>{
+document.getElementById("iniciarSesion").addEventListener('click', () => {
     window.location.href="vistas/Usuarios/login.php";
 });
 
-document.getElementById("crearSesion").addEventListener('click', () =>{
+document.getElementById("crearSesion").addEventListener('click', () => {
     window.location.href = "vistas/Usuarios/registro.php";
 });
 </script>

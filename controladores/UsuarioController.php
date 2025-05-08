@@ -1,6 +1,5 @@
 <?php
 require_once(__DIR__ . '/../config/database.php');
-
 require_once(__DIR__ . '/../modelos/usuario.php');
 
 class UsuarioController {
@@ -12,68 +11,86 @@ class UsuarioController {
 
     public function registrarUsuario() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Validación de datos
             $nombre   = htmlspecialchars($_POST['nombre']);
             $apellido = htmlspecialchars($_POST['apellido']);
             $email    = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $passwd1  = $_POST['passwd1'];
             $passwd2  = $_POST['passwd2'];
-    
+
             if (empty($nombre) || empty($apellido) || empty($email) || empty($passwd1) || empty($passwd2)) {
                 echo "<script>alert('Todos los campos son obligatorios.');</script>";
                 return;
             }
-    
+
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 echo "<script>alert('El correo electrónico no es válido.');</script>";
                 return;
             }
-    
+
             if ($passwd1 !== $passwd2) {
                 echo "<script>alert('Las contraseñas no coinciden.');</script>";
                 return;
             }
-    
+
             if (strlen($passwd1) < 6) {
                 echo "<script>alert('La contraseña debe tener al menos 6 caracteres.');</script>";
                 return;
             }
-    
-            // Encriptar la contraseña antes de guardarla.
-            $hashedPasswd = password_hash($passwd1, PASSWORD_BCRYPT);
-            $usuario = new Usuario($this->conn, null, $nombre, $email, $hashedPasswd, date('d-m-Y'));
-    
-            $usuario->registrar();
-        }
-    
 
+            $hashedPasswd = password_hash($passwd1, PASSWORD_BCRYPT);
+
+            $usuario = new Usuario($this->conn, null, $nombre, $email, $hashedPasswd, date('d-m-Y'));
+
+            $usuario->registrar();
+
+            session_start();
+            $_SESSION['user_id'] = $usuario->getId();
+            $_SESSION['user_name'] = $nombre;
+
+            if (isset($_POST['email'])) {
+                setcookie('user_email', $email, time() + 3600 * 24 * 30, '/', '', false, true); // HttpOnly
+            }
+
+            header("Location: /Travel-Go/index.php");
+            exit;
+        }
     }
+
     public function iniciarSesion() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+
             $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
             $passwd = $_POST['passwd'];
 
-            if (!$email || !$passwd) {
+            if (empty($email) || empty($passwd)) {
                 echo "<script>alert('Todos los campos deben estar llenos.')</script>";
                 return;
             }
 
-            // Obtener el usuario por su email
             $usuario = new Usuario($this->conn);
             $datosUsuario = $usuario->obtenerUsuarioPorEmail($email);
-            
-            if (!$datosUsuario){
-                echo "<script>alert('Usuario no registrado'</script>";
+
+            if (!$datosUsuario) {
+                echo "<script>alert('Usuario no registrado');</script>";
+                return;
             }
-            // Verificar si el usuario existe y la contraseña es correcta
-            if ($datosUsuario && $passwd === $datosUsuario['password']) {
-                session_start();
+
+            if (password_verify($passwd, $datosUsuario['password'])) {
                 $_SESSION['usuario_id'] = $datosUsuario['id'];
                 $_SESSION['usuario_nombre'] = $datosUsuario['nombre'];
                 $_SESSION['email'] = $datosUsuario['email'];
+
+                if (isset($_POST['recordar'])) {
+                    setcookie('usuario_recordado', $email, time() + (86400 * 30), "/"); 
+                }
+
                 header("Location: /Travel-Go/vistas/principal-page.php");
+                exit;
             } else {
-                echo "<script>alert('Email o contraseña incorrectos')</script>";
+                echo "<script>alert('Email o contraseña incorrectos');</script>";
             }
         }
     }

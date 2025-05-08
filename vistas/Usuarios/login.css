@@ -1,4 +1,3 @@
-/* Estilos generales para el cuerpo */
 body {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -12,7 +11,6 @@ body {
   height: 100vh;
 }
 
-/* Estilos para el contenedor del logo */
 #contenedorLogo {
   display: flex;
   justify-content: center;
@@ -33,7 +31,6 @@ body {
   color: #f7a8e0;
 }
 
-/* Formulario */
 fieldset {
   border-radius: 10px;
   border: 2px solid #f7a8e0;
@@ -47,7 +44,6 @@ fieldset {
   align-items: center;
 }
 
-/* Inputs y textarea más compactos */
 input,
 textarea {
   width: 95%;
@@ -65,26 +61,23 @@ textarea {
   resize: none;
 }
 
-/* Alineación del checkbox con su texto */
-
 #recordar {
   display: flex;
-  align-items: center; /* Asegura que estén alineados verticalmente */
-  flex-direction: row; /* Disposición en fila */
-  gap: 5px; /* Espacio entre checkbox y texto */
-  width: auto; /* Ajuste dinámico */
+  align-items: center;
+  flex-direction: row;
+  gap: 5px;
+  width: auto;
   margin-left: -50px;
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  white-space: nowrap;
 }
 
 #recordar input {
-  width: 16px; /* Tamaño del checkbox */
+  width: 16px;
   height: 16px;
   margin: 0;
   cursor: pointer;
 }
 
-/* Botón ajustado */
 button {
   margin-top: 15px;
   background-color: #f7a8e0;

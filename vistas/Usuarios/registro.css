@@ -39,6 +39,12 @@ nav {
   height: 60px; /* Tamaño constante para el logo */
   width: auto;
 }
+input:invalid {
+  border-color: red;
+}
+input:valid {
+  border-color: green;
+}
 
 h1 {
   font-size: 30px;

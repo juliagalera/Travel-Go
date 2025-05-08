@@ -6,14 +6,11 @@ class LugarController {
 
     private $conn;
 
-    // Constructor: inicializa la conexión con la base de datos
     public function __construct($conn) {
         $this->conn = $conn;
     }
 
-    // Crear un nuevo lugar
     public function crearLugar($nombre, $descripcion, $ubicacion, $imagen = null) {
-        // Validar datos
         $nombre = htmlspecialchars(trim($nombre));
         $descripcion = htmlspecialchars(trim($descripcion));
         $ubicacion = htmlspecialchars(trim($ubicacion));
@@ -23,10 +20,8 @@ class LugarController {
             return;
         }
 
-        // Verificar imagen
         $imagenPath = null;
-        if ($imagen) {
-            // Verificación simple de la imagen (tamaño, tipo, etc.)
+        if ($imagen && $imagen['error'] === UPLOAD_ERR_OK) {
             $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
             $imageExtension = strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));
 
@@ -35,33 +30,33 @@ class LugarController {
                 return;
             }
 
-            if ($imagen['size'] > 2000000) { // 2MB máximo
+            if ($imagen['size'] > 2000000) {
                 echo "La imagen es demasiado grande. El tamaño máximo es 2MB.";
                 return;
             }
 
             $imagenPath = 'uploads/' . basename($imagen['name']);
-            move_uploaded_file($imagen['tmp_name'], $imagenPath);
+            if (!move_uploaded_file($imagen['tmp_name'], $imagenPath)) {
+                echo "Error al subir la imagen.";
+                return;
+            }
         }
 
         $lugar = new Lugar($this->conn, null, $nombre, $descripcion, $ubicacion, $imagenPath);
         if ($lugar->agregarLugar()) {
-            header("Location: listarLugares.php"); // Redireccionar después de crear el lugar
+            header("Location: listarLugares.php");
             exit();
         } else {
             echo "Hubo un error al crear el lugar.";
         }
     }
 
-    // Ver lista de lugares
     public function listarLugares() {
         $lugares = Lugar::obtenerTodosLugares($this->conn);
         require_once 'vistas/lugares/listarLugares.php'; 
     }
 
-    // Editar un lugar
-    public function editarLugar($id, $nuevoNombre, $nuevaDescripcion, $nuevaUbicacion, $nuevaImagen) {
-        // Validar datos
+    public function editarLugar($id, $nuevoNombre, $nuevaDescripcion, $nuevaUbicacion, $nuevaImagen = null) {
         $nuevoNombre = htmlspecialchars(trim($nuevoNombre));
         $nuevaDescripcion = htmlspecialchars(trim($nuevaDescripcion));
         $nuevaUbicacion = htmlspecialchars(trim($nuevaUbicacion));
@@ -77,9 +72,7 @@ class LugarController {
             $lugar->setDescripcion($nuevaDescripcion);
             $lugar->setUbicacion($nuevaUbicacion);
 
-            // Verificar si se sube una nueva imagen
-            if ($nuevaImagen) {
-                // Verificación simple de la imagen
+            if ($nuevaImagen && $nuevaImagen['error'] === UPLOAD_ERR_OK) {
                 $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
                 $imageExtension = strtolower(pathinfo($nuevaImagen['name'], PATHINFO_EXTENSION));
 
@@ -88,18 +81,22 @@ class LugarController {
                     return;
                 }
 
-                if ($nuevaImagen['size'] > 2000000) { // 2MB máximo
+                if ($nuevaImagen['size'] > 2000000) {
                     echo "La imagen es demasiado grande. El tamaño máximo es 2MB.";
                     return;
                 }
 
                 $imagenPath = 'uploads/' . basename($nuevaImagen['name']);
-                move_uploaded_file($nuevaImagen['tmp_name'], $imagenPath);
+                if (!move_uploaded_file($nuevaImagen['tmp_name'], $imagenPath)) {
+                    echo "Error al subir la imagen.";
+                    return;
+                }
+
                 $lugar->setImagen($imagenPath);
             }
 
             if ($lugar->actualizarLugar($id)) {
-                header("Location: listarLugares.php"); // Redireccionar después de editar
+                header("Location: listarLugares.php");
                 exit();
             } else {
                 echo "Hubo un error al actualizar el lugar.";
@@ -109,24 +106,22 @@ class LugarController {
         }
     }
 
-    // Eliminar un lugar por su ID
     public function eliminarLugar($id) {
         $lugar = Lugar::obtenerLugarPorId($this->conn, $id);
-        
+
         if (!$lugar) {
             echo "Lugar no encontrado";
             return;
         }
-    
+
         if ($lugar->eliminarLugar($id)) {
-            header("Location: listarLugares.php"); // Redireccionar después de eliminar
+            header("Location: listarLugares.php");
             exit();
         } else {
             echo "Hubo un error al eliminar el lugar";
         }
     }
-    
-    // Obtener detalles de un lugar específico
+
     public function obtenerDetallesLugar($id) {
         $lugar = Lugar::obtenerLugarPorId($this->conn, $id);
         if ($lugar) {
@@ -139,10 +134,10 @@ class LugarController {
         }
     }
 
-    // Buscar lugares por término de búsqueda
     public function buscarLugares($busqueda) {
-        $busqueda = htmlspecialchars(trim($busqueda)); // Sanitizar la búsqueda
+        $busqueda = htmlspecialchars(trim($busqueda)); 
         $lugares = Lugar::buscarLugares($this->conn, $busqueda);
+
         if ($lugares) {
             foreach ($lugares as $lugar) {
                 echo "Lugar: " . $lugar->getNombre() . "<br>";

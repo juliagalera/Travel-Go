@@ -4,9 +4,9 @@
         heigth: auto;
         padding: 20px 0;
         text-align: center;
-        background-color: #F7A8E0; /* Fondo rosa suave */
+        background-color: #F7A8E0; 
         color: white;
-        margin-top: auto; /* Empuja el footer hacia abajo */
+        margin-top: auto; 
         font-size: 1rem;
     }
 </style>

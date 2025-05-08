@@ -94,13 +94,14 @@ if (session_status() === PHP_SESSION_NONE) {
       <a href="/Travel-Go/vistas/Usuarios/registro.php">Registro</a>
     </div>
     <div class="right-section">
-      <?php
-        if (isset($_SESSION['usuario_id'])) {
-            echo '<a href="/Travel-Go/vistas/Usuarios/perfil.php">Mi Perfil</a>';
-        } else {
-            echo '<a href="/Travel-Go/vistas/Usuarios/login.php">Iniciar sesión</a>';
-        }
-      ?>
+    <?php
+      if (isset($_SESSION['usuario_id'])) {
+          echo '<a href="/Travel-Go/vistas/Usuarios/perfil.php">Hola, ' . $_SESSION['usuario_nombre'] . '</a>';
+      } else {
+          echo '<a href="/Travel-Go/vistas/Usuarios/login.php">Iniciar sesión</a>';
+      }
+    ?>
+
     </div>
   </nav>
 

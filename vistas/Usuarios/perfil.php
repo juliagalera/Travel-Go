@@ -56,6 +56,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+// Eliminar cuenta
+if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
+    // Eliminar el usuario de la base de datos
+    $usuarioObj = new Usuario($conn, $usuario_id, null, null, null, null);
+    $eliminado = $usuarioObj->eliminarUsuario();
+
+    if ($eliminado) {
+        session_destroy(); // Destruir sesión
+        setcookie('usuario_recordado', '', time() - 3600, '/'); // Eliminar la cookie si existe
+        header("Location: /Travel-Go/index.php"); // Redirigir al inicio
+        exit;
+    } else {
+        $error = "Hubo un problema al eliminar tu cuenta.";
+    }
+}
+
 ?>
 
 <?php include_once(__DIR__ . '/../../nav.php'); ?>
@@ -91,81 +108,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p><strong>Nombre:</strong> <?= htmlspecialchars($usuario['nombre']) ?></p>
             <p><strong>Email:</strong> <?= htmlspecialchars($usuario['email']) ?></p>
             <a href="perfil.php?editar=1" style="display:inline-block; margin-top:1rem; padding:0.5rem 1rem; background:#e91e63; color:white; border-radius:5px;">Editar perfil</a>
+            <br><br>
+            <a href="perfil.php?eliminar=1" style="color: red; text-decoration: none; font-weight: bold;">Eliminar mi cuenta</a>
         </div>
     <?php endif; ?>
 </main>
 
 <?php include_once('../footer.php'); ?>
+
 <style>
     body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #fdfdfd;
-}
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #fdfdfd;
+    }
 
-main {
-    flex: 1;
-    padding: 2rem;
-    max-width: 600px;
-    margin: 0 auto;
-}
+    main {
+        flex: 1;
+        padding: 2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
 
-form {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-}
+    form {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
 
-form label {
-    display: flex;
-    flex-direction: column;
-    font-weight: 500;
-    color: #444;
-}
+    form label {
+        display: flex;
+        flex-direction: column;
+        font-weight: 500;
+        color: #444;
+    }
 
-form input {
-    margin-top: 0.3rem;
-    padding: 0.6rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: border 0.3s;
-}
+    form input {
+        margin-top: 0.3rem;
+        padding: 0.6rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        transition: border 0.3s;
+    }
 
-form input:focus {
-    border-color: #e91e63;
-    outline: none;
-}
+    form input:focus {
+        border-color: #e91e63;
+        outline: none;
+    }
 
-form button {
-    background-color: #e91e63;
-    color: white;
-    padding: 0.8rem;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
-}
+    form button {
+        background-color: #e91e63;
+        color: white;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
 
-form button:hover {
-    background-color: #d81b60;
-}
+    form button:hover {
+        background-color: #d81b60;
+    }
 
-form a {
-    text-align: center;
-    color: #777;
-    text-decoration: none;
-    margin-top: 0.5rem;
-}
+    form a {
+        text-align: center;
+        color: #777;
+        text-decoration: none;
+        margin-top: 0.5rem;
+    }
 
-form a:hover {
-    color: #e91e63;
-}
+    form a:hover {
+        color: #e91e63;
+    }
 </style>

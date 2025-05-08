@@ -1,4 +1,3 @@
-/* Estilos generales */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -6,74 +5,66 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: white; /* Fondo blanco */
+  background-color: white;
 }
 
 .container {
   display: flex;
   width: 100%;
-  height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+  height: 100vh;
 }
 
-/* Sección del carrusel */
 .seccion-carrusel {
-  flex: 3; /* Parte más amplia */
-  position: relative; /* Necesario para posicionar elementos dentro */
-  overflow: hidden; /* Oculta las imágenes fuera de la vista */
+  flex: 3;
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff; /* Fondo blanco */
+  background-color: #fff;
 }
 
 .carrusel {
   display: flex;
-  transition: transform 0.5s ease-in-out; /* Transición suave entre imágenes */
-  width: calc(100% * 4); /* Ajusta para contener todas las imágenes */
-  height: 100%; /* Asegura que las imágenes llenen la sección */
+  transition: transform 0.5s ease-in-out;
+  width: calc(100% * 4);
+  height: 100%;
 }
 
 .carrusel img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Evita distorsiones en las imágenes */
-  flex-shrink: 0; /* Evita que las imágenes se compriman */
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
-/* Texto encima del carrusel */
 .texto-carrusel {
-  position: absolute; /* Hace que el texto esté encima del carrusel */
-  top: 50%; /* Centra verticalmente el texto */
-  left: 50%; /* Centra horizontalmente el texto */
-  transform: translate(-50%, -50%); /* Asegura el centro perfecto */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: white;
   font-size: 36px;
   font-weight: bold;
   text-align: center;
-  z-index: 2; /* Asegura que el texto esté por encima de las imágenes */
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.5
-  ); /* Fondo semitransparente detrás del texto */
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 10px 20px;
-  border-radius: 8px; /* Bordes redondeados para el fondo */
+  border-radius: 8px;
 }
 
-/* Botones del carrusel */
 button.prev,
 button.next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: #f7a8e0; /* Rosa pastel */
+  background-color: #f7a8e0;
   border: none;
   color: white;
   font-size: 24px;
   padding: 10px;
   cursor: pointer;
-  z-index: 3; /* Por encima del texto */
+  z-index: 3;
 }
 
 button.prev {
@@ -85,17 +76,16 @@ button.next {
 }
 
 button:hover {
-  background-color: #e580ce; /* Rosa más intenso */
+  background-color: #e580ce;
 }
 
-/* Sección rosa más estrecha */
 .welcome {
-  flex: 1; /* Parte más estrecha */
-  background-color: #f7a8e0; /* Fondo rosa pastel */
+  flex: 1;
+  background-color: #f7a8e0;
   display: flex;
-  flex-direction: column; /* Coloca el texto y los botones en columna */
-  justify-content: center; /* Centra los elementos verticalmente */
-  align-items: center; /* Centra los elementos horizontalmente */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   color: white;
 }
@@ -108,23 +98,23 @@ button:hover {
 
 button#iniciarSesion,
 button#crearSesion {
-  background-color: #fff; /* Fondo blanco */
-  color: #f7a8e0; /* Color de texto rosa pastel */
+  background-color: #fff;
+  color: #f7a8e0;
   font-size: 16px;
   font-weight: bold;
   padding: 10px 20px;
-  border: 2px solid #f7a8e0; /* Borde rosa pastel */
-  border-radius: 8px; /* Bordes redondeados */
+  border: 2px solid #f7a8e0;
+  border-radius: 8px;
   cursor: pointer;
-  margin: 10px 0; /* Espaciado entre botones */
+  margin: 10px 0;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Hover para los botones */
 button#iniciarSesion:hover,
 button#crearSesion:hover {
-  background-color: #f7a8e0; /* Fondo cambia a rosa pastel */
-  color: white; /* Color del texto cambia a blanco */
+  background-color: #f7a8e0;
+  color: white;
 }
 a {
   text-decoration: none;
