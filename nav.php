@@ -18,7 +18,7 @@ if (session_status() === PHP_SESSION_NONE) {
     nav {
       width: 100%;
       height: 70px;
-      background-color: #f7a8e0;
+      background-color: white;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -30,13 +30,11 @@ if (session_status() === PHP_SESSION_NONE) {
       left: 0;
       z-index: 1000; 
     }
-    
 
     .left-section,
     .right-section {
       width: 150px;
     }
-    
 
     .center-links {
       flex: 1;
@@ -45,7 +43,6 @@ if (session_status() === PHP_SESSION_NONE) {
       justify-content: center;
       gap: 20px;
     }
-    
 
     .left-section img {
       height: 50px;
@@ -58,35 +55,55 @@ if (session_status() === PHP_SESSION_NONE) {
       font-weight: bold;
       transition: color 0.3s ease;
     }
-    
+
     .center-links a:hover {
-      color: azure;
+      color: #e580ce;
     }
-    
+
+    .right-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
     .right-section a {
-      text-decoration: none;
-      color: black;
-      font-size: 18px;
-      font-weight: bold;
-      padding: 5px 10px;
-      background-color: white;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    
+    text-decoration: none;
+    color: black;
+    font-size: 14px; 
+    font-weight: bold;
+    padding: 3px 8px;
+    background-color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
     .right-section a:hover {
       background-color: #e580ce;
       color: white;
     }
+
+    .logout-link {
+      font-size: 7px; 
+      color: #666; 
+      margin-top: 5px; 
+      text-decoration: none; 
+    }
+
+    .logout-link:hover {
+      color: #e580ce; 
+    }
+
     body {
-      padding-top: 80px;
+      padding-top: 80px; 
     }
   </style>
 </head>
 <body>
   <nav>
     <div class="left-section">
-      <img src="/Travel-Go/vistas/Usuarios/logo.png" alt="Logo">
+      <a href="/Travel-Go/inicio.php">
+       <img src="/Travel-Go/vistas/Usuarios/logo.png" alt="Logo">
+      </a>
     </div>
     <div class="center-links">
       <a href="/Travel-Go/inicio.php">Inicio</a>
@@ -94,16 +111,15 @@ if (session_status() === PHP_SESSION_NONE) {
       <a href="/Travel-Go/vistas/Usuarios/registro.php">Registro</a>
     </div>
     <div class="right-section">
-    <?php
-      if (isset($_SESSION['usuario_id'])) {
-          echo '<a href="/Travel-Go/vistas/Usuarios/perfil.php">Hola, ' . $_SESSION['usuario_nombre'] . '</a>';
-      } else {
-          echo '<a href="/Travel-Go/vistas/Usuarios/login.php">Iniciar sesión</a>';
-      }
-    ?>
-
+      <?php
+        if (isset($_SESSION['usuario_id'])) {
+            echo '<a href="/Travel-Go/vistas/Usuarios/perfil.php">Hola, ' . $_SESSION['usuario_nombre'] . '</a>';
+            echo '<a href="/Travel-Go/vistas/Usuarios/logout.php" class="logout-link">Cerrar sesión</a>';
+        } else {
+            echo '<a href="/Travel-Go/vistas/Usuarios/login.php">Iniciar sesión</a>';
+        }
+      ?>
     </div>
   </nav>
-
 </body>
 </html>

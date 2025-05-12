@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_COOKIE['usuario_recordado'])) {
-    setcookie('usuario_recordado', '', time() - 3600, '/'); // Eliminar la cookie
+    setcookie('usuario_recordado', '', time() - 3600, '/'); 
 }
 
 session_destroy();

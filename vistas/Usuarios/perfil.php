@@ -4,29 +4,20 @@ session_start();
 require_once(__DIR__ . '/../../config/database.php');
 require_once(__DIR__ . '/../../modelos/usuario.php');
 
-// Verificar si el usuario ha iniciado sesión
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: /Travel-Go/login.php");
-    exit;
-}
+$user_id = $_SESSION['usuario_id'];
 
-$usuario_id = $_SESSION['usuario_id'];
-
-// Obtener datos actuales del usuario desde la BD
-$usuario = Usuario::obtenerPorId($conn, $usuario_id); // Método que debes tener en tu clase Usuario
+$usuario = Usuario::obtenerPorId($conn, $user_id); 
 if (!$usuario) {
     echo "<p style='color:red; text-align:center;'>No se pudo cargar la información del usuario.</p>";
     exit;
 }
 
-// Si se envió el formulario de actualización
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['nombre']);
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
     $nueva_contrasena = trim($_POST['nueva_contrasena']);
     $confirmar_contrasena = trim($_POST['confirmar_contrasena']);
 
-    // Validaciones
     if (empty($nombre) || empty($email)) {
         $error = "El nombre y el email son obligatorios.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -39,11 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Si no hay errores, actualizar
     if (!isset($error)) {
         $nuevoHash = !empty($nueva_contrasena) ? password_hash($nueva_contrasena, PASSWORD_BCRYPT) : null;
 
-        $usuarioObj = new Usuario($conn, $usuario_id, $nombre, $email, null, null);
+        $usuarioObj = new Usuario($conn, $user_id, $nombre, $email, null, null);
         $actualizado = $usuarioObj->actualizarPerfil($nombre, $usuario['apellido'], $email, $nuevoHash);
 
         if ($actualizado) {
@@ -57,25 +47,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Eliminar cuenta
 if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
-    // Eliminar el usuario de la base de datos
-    $usuarioObj = new Usuario($conn, $usuario_id, null, null, null, null);
+    $usuarioObj = new Usuario($conn, $user_id, null, null, null, null);
     $eliminado = $usuarioObj->eliminarUsuario();
 
     if ($eliminado) {
-        session_destroy(); // Destruir sesión
-        setcookie('usuario_recordado', '', time() - 3600, '/'); // Eliminar la cookie si existe
-        header("Location: /Travel-Go/index.php"); // Redirigir al inicio
+        session_destroy();
+        setcookie('usuario_recordado', '', time() - 3600, '/'); 
+        header("Location: /Travel-Go/index.php"); 
         exit;
     } else {
         $error = "Hubo un problema al eliminar tu cuenta.";
     }
 }
-
 ?>
 
-<?php include_once(__DIR__ . '/../../nav.php'); ?>
+<?php include('../../nav.php'); ?>
 
 <main style="max-width: 800px; margin: 0 auto; padding: 2rem;">
     <h2 style="text-align: center; color: #e91e63;">Mi Perfil</h2>
@@ -109,12 +96,14 @@ if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
             <p><strong>Email:</strong> <?= htmlspecialchars($usuario['email']) ?></p>
             <a href="perfil.php?editar=1" style="display:inline-block; margin-top:1rem; padding:0.5rem 1rem; background:#e91e63; color:white; border-radius:5px;">Editar perfil</a>
             <br><br>
+            <a href="../Lugares/listarLugares.php" style="display:inline-block; margin-top:1rem; padding:0.5rem 1rem; background:#5e35b1; color:white; border-radius:5px;">Mis lugares</a> <!-- Enlace a Mis lugares -->
+            <br><br>
             <a href="perfil.php?eliminar=1" style="color: red; text-decoration: none; font-weight: bold;">Eliminar mi cuenta</a>
         </div>
     <?php endif; ?>
 </main>
 
-<?php include_once('../footer.php'); ?>
+<?php include_once('../footer.php'); ?>  
 
 <style>
     body {

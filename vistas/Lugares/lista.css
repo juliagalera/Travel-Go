@@ -1,0 +1,160 @@
+/* Estilo general para body */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff0f5;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  padding-top: 60px; /* Deja espacio para el navbar fijo */
+  padding-bottom: 60px; /* Deja espacio para el footer */
+  box-sizing: border-box;
+  min-height: 100vh; /* Esto asegura que el cuerpo ocupe toda la altura de la ventana */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor principal */
+main {
+  flex: 1; /* Hace que el main ocupe el espacio disponible */
+}
+
+/* Encabezado principal */
+h1 {
+  text-align: center;
+  color: #d63384;
+  margin-bottom: 30px;
+}
+
+/* Botón para agregar nuevo lugar */
+.btn-agregar,
+.btn-login {
+  display: inline-block;
+  background-color: #f78fb3;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px auto;
+  border: none;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+.btn-agregar:hover,
+.btn-login:hover {
+  background-color: #e667af;
+}
+
+/* Tabla de lugares */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(214, 51, 132, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background-color: #f8c7da;
+  color: #651c4b;
+}
+
+tr:hover {
+  background-color: #fff5f9;
+}
+
+img {
+  max-width: 100px;
+  border-radius: 10px;
+}
+
+/* Mensaje de no logueado */
+.mensaje-container {
+  max-width: 500px;
+  margin: 100px auto;
+  text-align: center;
+  background-color: #ffe6f0;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(214, 51, 132, 0.2);
+}
+
+.mensaje-container h2 {
+  color: #d63384;
+  margin-bottom: 15px;
+}
+
+.mensaje-container p {
+  color: #6c1b4e;
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+/* Estilo para los avisos de lugares duplicados */
+.aviso-duplicado {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+
+.aviso-duplicado p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.aviso-duplicado a {
+  color: #155724;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 15px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.aviso-duplicado a:hover {
+  background-color: #c3e6cb;
+  color: #155724;
+}
+
+/* Estilos para los botones de acción (editar, cancelar) */
+.aviso-duplicado a:nth-child(1) {
+  background-color: #f7c1c1;
+  border-color: #f7b0b0;
+}
+
+.aviso-duplicado a:nth-child(1):hover {
+  background-color: #f3a6a6;
+  color: #721c24;
+}
+
+.aviso-duplicado a:nth-child(2) {
+  background-color: #f0f0f0;
+  border-color: #d6d6d6;
+}
+
+.aviso-duplicado a:nth-child(2):hover {
+  background-color: #e2e2e2;
+  color: #721c24;
+}
+
+/* Asegura que el contenido principal ocupe el espacio restante */
+main {
+  flex-grow: 1;
+  padding-bottom: 60px; /* Deja espacio para el footer */
+}

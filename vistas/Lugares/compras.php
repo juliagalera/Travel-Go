@@ -32,6 +32,11 @@ $limite = 50;
     <?php include('../../nav.php');?>
 
     <h1>Lugares de <?php echo htmlspecialchars($category); ?> en Granada</h1>
+    <div class="nuevo-lugar-btn">
+    <a href="formularioLugar.php">+ Añadir nuevo lugar</a>
+    <a href='/Travel-Go/inicio.php'>Ver otras categorías</a>
+    </div>
+
 
     <section class="categories">
         <?php

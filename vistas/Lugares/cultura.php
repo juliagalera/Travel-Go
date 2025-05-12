@@ -33,12 +33,15 @@ $limite = 50;
     <?php include('../../nav.php');?>
 
     <h1>Lugares de <?php echo htmlspecialchars($category); ?> en Granada</h1>
+    <div class="nuevo-lugar-btn">
+    <a href="formularioLugar.php">+ Añadir nuevo lugar</a>
+    <a href='/Travel-Go/inicio.php'>Ver otras categorías</a>
+    </div>
 
     <section class="categories">
         <?php
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                // Recortar la descripción
                 $descripcionCorta = substr($row['detalle'], 0, $limite); 
                 if (strlen($row['detalle']) > $limite) {
                     $descripcionCorta .= '...'; 

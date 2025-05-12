@@ -34,7 +34,7 @@ body {
 fieldset {
   border-radius: 10px;
   border: 2px solid #f7a8e0;
-  padding: 15px;
+  padding: 20px;
   width: 380px;
   margin: 20px auto;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
@@ -47,9 +47,9 @@ fieldset {
 input,
 textarea {
   width: 95%;
-  height: 30px;
-  margin: 5px 0;
-  padding: 5px;
+  height: 35px;
+  margin: 10px 0;
+  padding: 10px;
   border: 1px solid #f7a8e0;
   border-radius: 5px;
   box-sizing: border-box;
@@ -61,36 +61,67 @@ textarea {
   resize: none;
 }
 
-#recordar {
-  display: flex;
+#recordar,
+#recordarDatos {
+  display: inline-flex;
   align-items: center;
-  flex-direction: row;
-  gap: 5px;
-  width: auto;
-  margin-left: -50px;
-  white-space: nowrap;
+  gap: 8px;
+  margin-top: 10px;
+  text-align: left;
 }
 
-#recordar input {
-  width: 16px;
-  height: 16px;
+#recordar input,
+#recordarDatos input {
+  width: 18px;
+  height: 18px;
   margin: 0;
   cursor: pointer;
 }
 
 button {
-  margin-top: 15px;
+  margin-top: 20px;
   background-color: #f7a8e0;
   color: white;
   font-weight: bold;
-  width: 140px;
-  height: 38px;
+  width: 160px;
+  height: 40px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #e580ce;
+}
+
+input:focus,
+button:focus {
+  outline: none;
+  border-color: #e580ce;
+  box-shadow: 0 0 5px rgba(229, 128, 206, 0.5);
+}
+
+.checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  position: relative;
+  top: 0.5px;
+  accent-color: #f7a8e0;
+}
+
+.checkbox-container span {
+  margin: 0;
+  padding: 0;
 }

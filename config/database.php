@@ -34,25 +34,14 @@ $conn->query($sql);
 // Crear tabla lugares si no existe
 $sql = "CREATE TABLE IF NOT EXISTS lugares (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL UNIQUE,
+    nombre VARCHAR(255) NOT NULL,
     detalle TEXT,
     imagen VARCHAR(255),
-    categoria VARCHAR(255)
+    categoria VARCHAR(255),
+    user_id INT
 )";
 $conn->query($sql);
 
-// Crear tabla reseñas si no existe
-$sql = "CREATE TABLE IF NOT EXISTS resenas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT,
-    lugar_id INT,
-    comentario TEXT,
-    calificacion INT CHECK (calificacion BETWEEN 1 AND 5),
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
-    FOREIGN KEY (lugar_id) REFERENCES lugares(id) ON DELETE CASCADE
-)";
-$conn->query($sql);
 
 
 $lugares = [
@@ -123,14 +112,12 @@ $lugares = [
 
 
 foreach ($lugares as $lugar) {
-    // Comprobar si el lugar ya existe en la base de datos
     $stmt = $conn->prepare("SELECT id FROM lugares WHERE nombre = ?");
     $stmt->bind_param("s", $lugar[0]);
     $stmt->execute();
     $stmt->store_result();
     
     if ($stmt->num_rows == 0) {
-        // Si no existe, insertar el nuevo lugar
         $stmt = $conn->prepare("INSERT INTO lugares (nombre, detalle, imagen, categoria) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $lugar[0], $lugar[1], $lugar[2], $lugar[3]);
         $stmt->execute();

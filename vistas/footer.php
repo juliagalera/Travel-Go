@@ -4,7 +4,7 @@
         heigth: auto;
         padding: 20px 0;
         text-align: center;
-        background-color: #F7A8E0; 
+        background-color: black; 
         color: white;
         margin-top: auto; 
         font-size: 1rem;

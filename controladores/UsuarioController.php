@@ -24,11 +24,13 @@ class UsuarioController {
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 echo "<script>alert('El correo electrónico no es válido.');</script>";
+                header('Location: registro.php');
                 return;
             }
 
             if ($passwd1 !== $passwd2) {
                 echo "<script>alert('Las contraseñas no coinciden.');</script>";
+                header('Location: registro.php');
                 return;
             }
 
@@ -61,32 +63,41 @@ class UsuarioController {
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
-
-            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-            $passwd = $_POST['passwd'];
-
+    
+            $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+            $passwd = trim($_POST['passwd']);
+    
             if (empty($email) || empty($passwd)) {
                 echo "<script>alert('Todos los campos deben estar llenos.')</script>";
                 return;
             }
-
+    
             $usuario = new Usuario($this->conn);
             $datosUsuario = $usuario->obtenerUsuarioPorEmail($email);
-
+    
             if (!$datosUsuario) {
                 echo "<script>alert('Usuario no registrado');</script>";
                 return;
             }
-
+    
             if (password_verify($passwd, $datosUsuario['password'])) {
                 $_SESSION['usuario_id'] = $datosUsuario['id'];
                 $_SESSION['usuario_nombre'] = $datosUsuario['nombre'];
                 $_SESSION['email'] = $datosUsuario['email'];
-
+    
                 if (isset($_POST['recordar'])) {
                     setcookie('usuario_recordado', $email, time() + (86400 * 30), "/"); 
                 }
-
+    
+                if (isset($_POST['recordarDatos'])) {
+                    setcookie('usuario_recordado_email', $email, time() + (86400 * 30), "/");
+                    setcookie('usuario_recordado_passwd', $passwd, time() + (86400 * 30), "/");
+                } else {
+                    setcookie('usuario_recordado_email', $email, time() + (86400 * 365 * 10), "/");
+                    setcookie('usuario_recordado_passwd', $passwd, time() + (86400 * 365 * 10), "/");
+                    
+                }
+    
                 header("Location: /Travel-Go/vistas/principal-page.php");
                 exit;
             } else {
@@ -94,6 +105,8 @@ class UsuarioController {
             }
         }
     }
+    
+    
 
     public function mostrarFormularioRegistro() {
         require_once '../vistas/registro.php';

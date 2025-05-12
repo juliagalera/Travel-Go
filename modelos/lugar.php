@@ -3,60 +3,67 @@ class Lugar {
     private $id;
     private $nombre;
     private $descripcion;
-    private $ubicacion;
     private $imagen;
+    private $categoria; 
     private $conn;
 
-    // Getters y Setters
     public function getId() {
         return $this->id;
     }
+
     public function setId($id) {
         $this->id = $id;
     }
+
     public function getNombre() {
         return $this->nombre;
     }
+
     public function setNombre($nombre) {
         $this->nombre = $nombre;
     }
+
     public function getDescripcion() {
         return $this->descripcion;
     }
+
     public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
     }
-    public function getUbicacion() {
-        return $this->ubicacion;
-    }
-    public function setUbicacion($ubicacion) {
-        $this->ubicacion = $ubicacion;
-    }
+
     public function getImagen() {
         return $this->imagen;
     }
+
     public function setImagen($imagen) {
         $this->imagen = $imagen;
     }
 
-    // Constructor
-    public function __construct($conn, $id = null, $nombre = null, $descripcion = null, $ubicacion = null, $imagen = null) {
-        $this->conn = $conn;
-        $this->id = $id;
-        $this->nombre = $nombre;
-        $this->descripcion = $descripcion;
-        $this->ubicacion = $ubicacion;
-        $this->imagen = $imagen;
+    public function getCategoria() { 
+        return $this->categoria;
     }
 
-    // Método para agregar un lugar
+    public function setCategoria($categoria) {  
+    }
+
+    // Constructor modificado para aceptar la categoría
+    public function __construct($conn, $id = null, $nombre = null, $descripcion = null,  $imagen = null, $categoria = null) {
+        $this->conn = $conn;
+        $this->id = $id;
+        $this->nombre = $nombre ?? null;
+        $this->descripcion = $descripcion ?? null;
+        $this->imagen = $imagen ?? null;
+        $this->categoria = $categoria ?? null;
+    }
+
+    // Método para agregar lugar con categoría
     public function agregarLugar() {
-        $stmt = $this->conn->prepare("INSERT INTO lugares (nombre, descripcion, ubicacion, imagen) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $this->nombre, $this->descripcion, $this->ubicacion, $this->imagen);
+        $stmt = $this->conn->prepare("INSERT INTO lugares (nombre, detalle, imagen, categoria) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $this->nombre, $this->descripcion, $this->imagen, $this->categoria);
         return $stmt->execute();
     }
 
-    // Método para obtener un lugar por ID
+    // Obtener lugar por id, ahora incluye categoría
     public static function obtenerLugarPorId($conn, $id) {
         $query = "SELECT * FROM lugares WHERE id = ?";
         $stmt = $conn->prepare($query);
@@ -71,8 +78,8 @@ class Lugar {
                 $row['id'],
                 $row['nombre'],
                 $row['descripcion'],
-                $row['ubicacion'],
-                $row['imagen']
+                $row['imagen'],
+                $row['categoria'] 
             );
             return $lugar;
         } else {
@@ -80,21 +87,21 @@ class Lugar {
         }
     }
 
-    // Método para actualizar un lugar
+    // Método para actualizar lugar, incluye categoría
     public function actualizarLugar($id) {
-        $stmt = $this->conn->prepare("UPDATE lugares SET nombre = ?, descripcion = ?, ubicacion = ?, imagen = ? WHERE id = ?");
-        $stmt->bind_param("ssssi", $this->nombre, $this->descripcion, $this->ubicacion, $this->imagen, $id);
+        $stmt = $this->conn->prepare("UPDATE lugares SET nombre = ?, descripcion = ?, imagen = ?, categoria = ? WHERE id = ?");
+        $stmt->bind_param("ssssi", $this->nombre, $this->descripcion, $this->imagen, $this->categoria, $id);
         return $stmt->execute();
     }
 
-    // Método para eliminar un lugar
+    // Método para eliminar lugar
     public function eliminarLugar($id) {
         $stmt = $this->conn->prepare("DELETE FROM lugares WHERE id = ?");
         $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
 
-    // Método para obtener todos los lugares
+    // Método para obtener todos los lugares, incluye categoría
     public static function obtenerTodosLugares($conn) {
         $query = "SELECT * FROM lugares";
         $stmt = $conn->prepare($query);
@@ -103,27 +110,28 @@ class Lugar {
         $lugares = [];
 
         while ($row = $result->fetch_assoc()) {
-            $lugares[] = new Lugar($conn, $row['id'], $row['nombre'], $row['descripcion'], $row['ubicacion'], $row['imagen']);
+            $lugares[] = new Lugar($conn, $row['id'], $row['nombre'], $row['detalle'], $row['img'], $row['categoria']); 
         }
 
         return $lugares;
     }
 
-    // Método para buscar lugares por término
+    // Método para buscar lugares, incluye categoría en la búsqueda
     public static function buscarLugares($conn, $busqueda) {
-        $query = "SELECT * FROM lugares WHERE nombre LIKE ? OR ubicacion LIKE ?";
+        $query = "SELECT * FROM lugares WHERE nombre LIKE ? OR descripcion LIKE ? OR categoria LIKE ?";
         $stmt = $conn->prepare($query);
         $likeBusqueda = "%" . $busqueda . "%";
-        $stmt->bind_param("ss", $likeBusqueda, $likeBusqueda);
+        $stmt->bind_param("sss", $likeBusqueda, $likeBusqueda, $likeBusqueda);
         $stmt->execute();
         $result = $stmt->get_result();
         $lugares = [];
 
         while ($row = $result->fetch_assoc()) {
-            $lugares[] = new Lugar($conn, $row['id'], $row['nombre'], $row['descripcion'], $row['ubicacion'], $row['imagen']);
+            $lugares[] = new Lugar($conn, $row['id'], $row['nombre'], $row['descripcion'], $row['imagen'], $row['categoria']); 
         }
 
         return $lugares;
     }
 }
+
 ?>
