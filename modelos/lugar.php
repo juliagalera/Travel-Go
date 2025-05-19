@@ -44,9 +44,9 @@ class Lugar {
     }
 
     public function setCategoria($categoria) {  
+        $this->categoria = $categoria;
     }
 
-    // Constructor modificado para aceptar la categoría
     public function __construct($conn, $id = null, $nombre = null, $descripcion = null,  $imagen = null, $categoria = null) {
         $this->conn = $conn;
         $this->id = $id;
@@ -77,7 +77,7 @@ class Lugar {
                 $conn,
                 $row['id'],
                 $row['nombre'],
-                $row['descripcion'],
+                $row['detalle'],
                 $row['imagen'],
                 $row['categoria'] 
             );
@@ -88,18 +88,20 @@ class Lugar {
     }
 
     // Método para actualizar lugar, incluye categoría
-    public function actualizarLugar($id) {
-        $stmt = $this->conn->prepare("UPDATE lugares SET nombre = ?, descripcion = ?, imagen = ?, categoria = ? WHERE id = ?");
-        $stmt->bind_param("ssssi", $this->nombre, $this->descripcion, $this->imagen, $this->categoria, $id);
+    public function actualizarLugar() {
+        $stmt = $this->conn->prepare("UPDATE lugares SET nombre = ?, detalle = ?, imagen = ?, categoria = ? WHERE id = ?");
+        $stmt->bind_param("ssssi", $this->nombre, $this->descripcion, $this->imagen, $this->categoria, $this->id);
         return $stmt->execute();
     }
 
+
     // Método para eliminar lugar
-    public function eliminarLugar($id) {
+    public function eliminarLugar() {
         $stmt = $this->conn->prepare("DELETE FROM lugares WHERE id = ?");
-        $stmt->bind_param("i", $id);
+        $stmt->bind_param("i", $this->id);
         return $stmt->execute();
     }
+
 
     // Método para obtener todos los lugares, incluye categoría
     public static function obtenerTodosLugares($conn) {
@@ -110,7 +112,7 @@ class Lugar {
         $lugares = [];
 
         while ($row = $result->fetch_assoc()) {
-            $lugares[] = new Lugar($conn, $row['id'], $row['nombre'], $row['detalle'], $row['img'], $row['categoria']); 
+            $lugares[] = new Lugar($conn, $row['id'], $row['nombre'], $row['detalle'], $row['imagen'], $row['categoria']); 
         }
 
         return $lugares;
@@ -127,7 +129,7 @@ class Lugar {
         $lugares = [];
 
         while ($row = $result->fetch_assoc()) {
-            $lugares[] = new Lugar($conn, $row['id'], $row['nombre'], $row['descripcion'], $row['imagen'], $row['categoria']); 
+            $lugares[] = new Lugar($conn, $row['id'], $row['nombre'], $row['detalle'], $row['imagen'], $row['categoria']); 
         }
 
         return $lugares;

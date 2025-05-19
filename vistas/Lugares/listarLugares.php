@@ -28,6 +28,7 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $userId = $_SESSION['usuario_id'];
 
+
 // Crear una instancia de LugarController
 $lugarController = new LugarController($conn);
 
@@ -47,37 +48,41 @@ include('../../nav.php');
 <body>
     <h1>Lista de Lugares</h1>
 
-    <a href="formularioCrearLugar.php" class="btn-agregar">Agregar nuevo lugar</a> 
+    <a href="formularioLugar.php" class="btn-agregar">Agregar nuevo lugar</a> 
 
     <table>
     <thead>
         <tr>
             <th>Nombre</th>
             <th>Descripción</th>
+            <th>Imagen</th> 
             <th>Categoría</th>
-            <th>Imagen</th>
             <th>Acciones</th>
+            
         </tr>
     </thead>
     <tbody>
         <?php if (count($lugares) > 0): ?>
             <?php foreach ($lugares as $lugar): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($lugar['nombre']); ?></td>
-                    <td><?php echo htmlspecialchars($lugar['detalle']); ?></td>
-                    <td><?php $categorias = is_array($lugar['categoria']) ? $lugar['categoria'] : [$lugar['categoria']];
-                    echo htmlspecialchars(implode(', ', $categorias));?></td>
+                    <td><?php $stmt = "SELECT nombre FROM LUGARES WHERE user_id = $userId";
+                        $conn->query($stmt);
+                    ?>
+                </td>
+                    <td><?php $stmt = "SELECT detalle FROM LUGARES WHERE user_id = $userId"; 
+                    $conn->query($stmt);
+                    ?></td>
 
-                    <td>
-                        <?php if ($lugar['imagen']): ?>
-                            <img src="<?php echo '../../img/' . htmlspecialchars($lugar['imagen']); ?>" alt="<?php echo htmlspecialchars($lugar['nombre']); ?>" width="100">
-                        <?php else: ?>
-                            <p>No hay imagen</p>
-                        <?php endif; ?>
+
+                    <td>      
+                     <?php $stmt = "SELECT imagen FROM LUGARES WHERE user_id = $userId" ; 
+                     $conn->query($stmt);?>
                     </td>
+                    <td><?php $stmt = "SELECT categoria FROM LUGARES WHERE user_id = $userId" ;
+                    $conn->query($stmt);?></td>
                     <td>
                         <a href="formularioEditarLugar.php?id=<?php echo $lugar['id']; ?>">Editar</a>
-                        <a href="eliminarLugar.php?id=<?php echo $lugar['id']; ?>" onclick="return confirm('¿Estás seguro de eliminar este lugar?');">Eliminar</a>
+                        <a href="listarLugares.php" onclick="return confirm('¿Estás seguro de eliminar este lugar?');">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

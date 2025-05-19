@@ -30,11 +30,11 @@ include('../../nav.php');
 
             <label for="categoria">Categoría:</label>
             <select name="categoria" id="categoria">
-                <option value="Deportes">Deportes</option>
-                <option value="Cultura">Cultura</option>
-                <option value="Gastronomia">Gastronomía</option>
+                <option value="deportes">Deportes</option>
+                <option value="cultura">Cultura</option>
+                <option value="gastronomia">Gastronomía</option>
                 <option value="compras">Compras</option>
-                <option value="Parques">Parques</option>
+                <option value="parques">Parques</option>
             </select>
 
             <input type="submit" value="Guardar Lugar">

@@ -24,28 +24,48 @@ class LugarController {
 
         return $lugares;  
     }
+
+private function manejarImagen($archivo, $directorio = 'img/'){
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+    $extension = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
+
+
+    if(!in_array($extension, $allowedExtensions)){
+        return ['error' => "El archivo de imagen no es válido"];
+    }
+
+
+    if ($archivo['size' > 2000000]) {
+        return ['error', "La imagen es demasiado grande."];
+    }
+
+    $nombreUnico = uniqid() . '.' . $extension;
+    $rutaDestino = $directorio . $nombreUnico¨;
+
+
+    if (!move_uploaded_file($archivo['tmp_name'], $rutaDestino)) {
+        return ['error' => "Error al subir la imagen"];
+    }
+
+    return ['ruta' => $rutaDestino];
+}
 public function crearLugar($nombre, $descripcion, $imagen = null, $categoria, $usuarioId) {
-    // Sanear las entradas de nombre, descripcion y categoria (solo cadenas)
     $nombre = htmlspecialchars(trim($nombre));
     $descripcion = htmlspecialchars(trim($descripcion));
     $categoria = is_array($categoria) ? implode(',', $categoria) : $categoria;
     $categoria = htmlspecialchars(trim($categoria));
 
-
-    // Validación de campos vacíos
     if (empty($nombre) || empty($descripcion) || empty($categoria)) {
         echo "Todos los campos son obligatorios.";
         return;
     }
 
-    // Verificar si ya existe un lugar con ese nombre para este usuario
     $stmt = $this->conn->prepare("SELECT * FROM lugares WHERE nombre = ? AND user_id = ?");
     $stmt->bind_param("si", $nombre, $usuarioId);
     $stmt->execute();
     $resultado = $stmt->get_result();
 
     if ($resultado->num_rows > 0) {
-        // Si el lugar ya existe, mostrar el mensaje de duplicado
         $lugarExistente = $resultado->fetch_assoc();
         echo "<div class='aviso-duplicado'>";
         echo "<p>Ya has creado un lugar con ese nombre.</p>";
@@ -55,58 +75,46 @@ public function crearLugar($nombre, $descripcion, $imagen = null, $categoria, $u
         return;
     }
 
-    // Si no existe, proceder a insertar el nuevo lugar
     $imagenPath = null;
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-        $imagen = $_FILES['imagen']; // Asignamos el archivo a la variable imagen
-        
-        // Validar imagen
+        $imagen = $_FILES['imagen'];
+
         $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
         $imageExtension = strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));
-    
-        // Verificar si la extensión es válida
+
         if (!in_array($imageExtension, $allowedExtensions)) {
             echo "El archivo de imagen no es válido.";
             return;
         }
-    
-        // Verificar tamaño de la imagen (máximo 2MB)
+
         if ($imagen['size'] > 2000000) {
             echo "La imagen es demasiado grande. El tamaño máximo es 2MB.";
             return;
         }
-    
-        // Mover imagen al directorio
+
         $imagenPath = 'img/' . basename($imagen['name']);
         if (!move_uploaded_file($imagen['tmp_name'], $imagenPath)) {
             echo "Error al subir la imagen.";
             return;
         }
-    
-        // Si todo va bien, puedes guardar el nombre de la imagen en la base de datos y mostrarla
-        echo "<img src='$imagenPath' alt='" . htmlspecialchars($imagen['name']) . "' width='100'>";
-    } else {
-        echo "Error al cargar la imagen o la imagen no es válida.";
-    }
-    
-    
-    
-    
 
-    // Preparar la consulta de inserción
+        echo "<img src='$imagenPath' alt='" . htmlspecialchars($imagen['name']) . "' width='100'>";
+    } elseif (isset($_FILES['imagen']) && $_FILES['imagen']['error'] !== UPLOAD_ERR_NO_FILE) {
+        echo "Error al cargar la imagen o la imagen no es válida.";
+        return;
+    }
+
     $stmt = $this->conn->prepare("INSERT INTO lugares (nombre, detalle, imagen, categoria, user_id) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssi", $nombre, $descripcion, $imagenPath, $categoria, $usuarioId);
 
-    // Ejecutar la consulta
     if ($stmt->execute()) {
-        header("Location: listarLugares.php");
+        header('Location: listarLugares.php');
         exit;
     } else {
         echo "Error al guardar el lugar.";
     }
 }
 
-    
     
 
     // Listar todos los lugares
@@ -130,7 +138,7 @@ public function crearLugar($nombre, $descripcion, $imagen = null, $categoria, $u
         if ($lugar) {
             $lugar->setNombre($nuevoNombre);
             $lugar->setDescripcion($nuevaDescripcion);
-            $lugar->setCategoria($nuevaCategoria);  // Actualizamos la categoría
+            $lugar->setCategoria($nuevaCategoria);  
 
             if ($nuevaImagen && $nuevaImagen['error'] === UPLOAD_ERR_OK) {
                 $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
@@ -146,7 +154,7 @@ public function crearLugar($nombre, $descripcion, $imagen = null, $categoria, $u
                     return;
                 }
 
-                $imagenPath = 'uploads/' . basename($nuevaImagen['name']);
+                $imagenPath = 'img/' . basename($nuevaImagen['name']);
                 if (!move_uploaded_file($nuevaImagen['tmp_name'], $imagenPath)) {
                     echo "Error al subir la imagen.";
                     return;

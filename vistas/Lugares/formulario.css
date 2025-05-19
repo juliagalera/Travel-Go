@@ -62,7 +62,8 @@ select {
   font-size: 14px;
 }
 
-input[type="submit"] {
+input[type="submit"],
+button {
   margin-top: 25px;
   padding: 12px;
   background-color: #f49ac1;
@@ -75,6 +76,7 @@ input[type="submit"] {
   transition: background-color 0.3s ease;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover,
+button:hover {
   background-color: #e26ca1;
 }
