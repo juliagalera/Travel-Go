@@ -107,7 +107,16 @@ $lugares = [
     ['La Madraza', 'Fundada en el siglo XIV por Yusuf I, la Madraza fue la primera universidad islámica de Granada. Su mihrab y su decoración interior recuerdan la importancia del saber en al-Ándalus y su legado cultural y educativo.', 'madraza.jpg', 'cultura'],
     ['Club de Golf Granada', 'Ubicado en un entorno natural privilegiado, este club ofrece instalaciones de primer nivel para aficionados y profesionales del golf. Ideal para quienes buscan combinar deporte, naturaleza y vistas espectaculares a Sierra Nevada.', 'golf.jpg', 'deportes'],
     ['Centro Deportivo Municipal Bola de Oro', 'Este complejo moderno cuenta con pistas de fútbol, baloncesto y otras instalaciones deportivas. Perfecto para locales y visitantes que quieren mantenerse activos durante su estancia en la ciudad.', 'bolaOro.jpg', 'deportes'],
-    ['Estadio Los Cármenes', 'El Estadio de Los Cármenes es un lugar emblemático de Granada, hogar del Granada CF, y uno de los principales espacios deportivos de la ciudad. Con su impresionante capacidad y ambiente vibrante, es el escenario de importantes partidos de fútbol y eventos deportivos. Ubicado a las afueras del centro de la ciudad, el estadio ofrece una experiencia única tanto para los aficionados al fútbol como para los visitantes que desean conocer una parte importante de la cultura deportiva granadina.', 'carmenes.jpg', 'deportes']
+    ['Estadio Los Cármenes', 'El Estadio de Los Cármenes es un lugar emblemático de Granada, hogar del Granada CF, y uno de los principales espacios deportivos de la ciudad. Con su impresionante capacidad y ambiente vibrante, es el escenario de importantes partidos de fútbol y eventos deportivos. Ubicado a las afueras del centro de la ciudad, el estadio ofrece una experiencia única tanto para los aficionados al fútbol como para los visitantes que desean conocer una parte importante de la cultura deportiva granadina.', 'carmenes.jpg', 'deportes'],
+    ['Bodegas Castañeda', 'Uno de los bares más tradicionales de Granada, famoso por sus vermuts caseros, embutidos y tapas típicas andaluzas en un ambiente auténtico y castizo.', 'castañeda.jpg', 'gastronomía'],
+    ['Hicuri Art Vegan', 'Un local colorido y acogedor donde se sirven platos creativos, totalmente veganos, en pleno centro de Granada. Perfecto para quienes buscan opciones saludables y sostenibles.', 'Hicuri.jpg', 'gastronomía'],
+    ['Damasqueros', 'Restaurante elegante que fusiona cocina tradicional granadina con un enfoque moderno y de autor. Menú degustación que cambia semanalmente.', 'damasqueros.jpg', 'gastronomía'],
+    ['Los Manueles', 'Fundado en 1917, este bar-restaurante combina tradición y modernidad. Famoso por su tapa de croqueta gigante, es una parada imprescindible para los amantes de las tapas.', 'manueles.jpg', 'gastronomía'],
+    ['Raíces', 'Restaurante de cocina creativa y de autor que combina sabores tradicionales con técnicas modernas. Raíces destaca por su elegancia, su cuidada presentación y el uso de productos locales de temporada.', 'raices.jpg', 'gastronomía']
+
+        
+
+
 ];
 
 

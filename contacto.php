@@ -22,7 +22,7 @@
             <div id="recordar">
                 <input type="checkbox" name="suscripcion"> Suscribirme a novedades
             </div>
-            <button type="submit">Enviar</button>
+            <button id="button" type="submit">Enviar</button>
         </form>
     </fieldset>
 

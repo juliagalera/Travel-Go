@@ -19,26 +19,26 @@
     <legend><strong>Registro</strong></legend>
         <form id="registroForm" action="/Travel-Go/index.php?action=registrarUsuario" method="post">
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" autofocus><br><br>
+            <input class="forminp" type="text" id="nombre" name="nombre" autofocus><br><br>
 
             <label for="apellido">Apellidos:</label>
-            <input type="text" id="apellido" name="apellido"><br><br>
+            <input class="forminp" type="text" id="apellido" name="apellido"><br><br>
 
             <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" name="email"><br><br>
+            <input class="forminp" type="email" id="email" name="email"><br><br>
 
             <label for="passwd1">Contraseña:</label>
-            <input type="password" id="passwd1" name="passwd1" ><br><br>
+            <input class="forminp" type="password" id="passwd1" name="passwd1" ><br><br>
 
             <label for="passwd2">Repita su contraseña:</label>
-            <input type="password" id="passwd2" name="passwd2" ><br><br>
+            <input class="forminp" type="password" id="passwd2" name="passwd2" ><br><br>
 
             <div id="AceptarTerminos">
                 <input type="checkbox" id="terminos" name="terminos" >
                 <label for="terminos">Acepto los <a href="terminos.html">términos y condiciones</a></label>
             </div>
 
-            <button type="submit">Registrarme</button>
+            <button class="button" type="submit">Registrarme</button>
         </form>
     </fieldset>
     <script>

@@ -74,7 +74,7 @@ if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
             <p style="color: red; text-align: center;"><?= $error ?></p>
         <?php endif; ?>
 
-        <form method="post" style="display: flex; flex-direction: column; gap: 1rem; padding: 1rem;">
+        <form id="form" method="post" style="display: flex; flex-direction: column; gap: 1rem; padding: 1rem;">
             <label>Nombre:
                 <input type="text" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>
             </label>
@@ -111,7 +111,6 @@ if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        font-family: 'Segoe UI', sans-serif;
         background-color: #fdfdfd;
     }
 
@@ -122,7 +121,7 @@ if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
         margin: 0 auto;
     }
 
-    form {
+    #form {
         background-color: #fff;
         padding: 2rem;
         border-radius: 12px;
@@ -132,14 +131,14 @@ if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
         gap: 1.2rem;
     }
 
-    form label {
+    #form label {
         display: flex;
         flex-direction: column;
         font-weight: 500;
         color: #444;
     }
 
-    form input {
+    #form input {
         margin-top: 0.3rem;
         padding: 0.6rem 1rem;
         border: 1px solid #ccc;
@@ -147,12 +146,12 @@ if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
         transition: border 0.3s;
     }
 
-    form input:focus {
+    #form input:focus {
         border-color: #e91e63;
         outline: none;
     }
 
-    form button {
+    #form button {
         background-color: #e91e63;
         color: white;
         padding: 0.8rem;
@@ -163,18 +162,18 @@ if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
         transition: background-color 0.3s;
     }
 
-    form button:hover {
+    #form button:hover {
         background-color: #d81b60;
     }
 
-    form a {
+    #form a {
         text-align: center;
         color: #777;
         text-decoration: none;
         margin-top: 0.5rem;
     }
 
-    form a:hover {
+    #form a:hover {
         color: #e91e63;
     }
 </style>

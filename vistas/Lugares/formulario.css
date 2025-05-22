@@ -1,5 +1,4 @@
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: #fef6fb;
   color: #444;
   margin: 0;
@@ -21,7 +20,7 @@ h1 {
   margin-bottom: 25px;
 }
 
-form {
+#nuevoLugar {
   display: flex;
   flex-direction: column;
 }
@@ -33,7 +32,7 @@ label {
   color: #b13b76;
 }
 
-input[type="text"],
+.input[type="text"],
 textarea,
 input[type="file"],
 select {
@@ -45,7 +44,7 @@ select {
   transition: border 0.3s ease;
 }
 
-input[type="text"]:focus,
+.input[type="text"]:focus,
 textarea:focus,
 select:focus {
   border-color: #ec81ad;
@@ -62,7 +61,7 @@ select {
   font-size: 14px;
 }
 
-input[type="submit"],
+.input[type="submit"],
 button {
   margin-top: 25px;
   padding: 12px;
@@ -76,7 +75,7 @@ button {
   transition: background-color 0.3s ease;
 }
 
-input[type="submit"]:hover,
+.input[type="submit"]:hover,
 button:hover {
   background-color: #e26ca1;
 }

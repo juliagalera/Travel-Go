@@ -4,12 +4,6 @@ require('C:/xampp/htdocs/Travel-Go/config/database.php');
 
 $category = isset($_GET['categoria']) ? mysqli_real_escape_string($conn, $_GET['categoria']) : 'Deportes';
 
-$categoriasValidas = ['Deportes', 'Cultura', 'Gastronomia', 'Compras', 'Parques'];
-if (!in_array($category, $categoriasValidas)) {
-    echo "Categoría no válida.";
-    exit;
-}
-
 $query = "SELECT * FROM lugares WHERE categoria = '$category'";
 $result = mysqli_query($conn, $query);
 
@@ -30,7 +24,7 @@ $limite = 50;
     <link rel="stylesheet" href="filtros.css">
 </head>
 <body>
-    <?php include('../../nav.php');?>
+    <?php include('../../nav.php'); ?>
 
     <h1>Lugares de <?php echo htmlspecialchars($category); ?> en Granada</h1>
     <div class="nuevo-lugar-btn">
@@ -38,17 +32,26 @@ $limite = 50;
     <a href='/Travel-Go/inicio.php'>Ver otras categorías</a>
     </div>
 
+
     <section class="categories">
         <?php
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                $descripcionCorta = substr($row['detalle'], 0, $limite); 
-                if (strlen($row['detalle']) > $limite) {
-                    $descripcionCorta .= '...';  
+                $descripcionCorta = substr($row['detalle'], 0, $limite);
+                if(strlen($row['detalle']) > $limite) {
+                    $descripcionCorta .= '...'; 
                 }
 
                 echo '<div class="category">';
-                echo '<img src="../../img/' . htmlspecialchars($row['imagen']) . '" alt="' . htmlspecialchars($row['nombre']) . '" />';
+                $imagen = htmlspecialchars($row['imagen']);
+                if (substr($imagen, 0, 4) === "img/") {
+                    $imagen = substr($imagen, 4);
+                }
+                                $imagen = htmlspecialchars($row['imagen']);
+                if (substr($imagen, 0, 4) === "img/") {
+                    $imagen = substr($imagen, 4);
+                }
+                echo '<img src="../../img/' . $imagen . '" alt="' . htmlspecialchars($row['nombre']) . '" />';
                 echo '<h2>' . htmlspecialchars($row['nombre']) . '</h2>';
                 echo '<p>' . htmlspecialchars($descripcionCorta) . '</p>';
                 ?>

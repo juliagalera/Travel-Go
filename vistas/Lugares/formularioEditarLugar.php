@@ -10,10 +10,9 @@ if(!$lugar){
     echo "Lugar no encontrado";
 }
 
-$categpriaActual = $lugar->getCategoria();
-$categoriasSeleccionadas = explode(',', $categpriaActual);
+$categoriaActual = $lugar->getCategoria();
 
-$categoriasDisponibles = ['Parque', 'Restaurantes', 'Compras', 'Cultura', 'Deportes'];
+$categoriasDisponibles = ['Parque', 'Gastronomía', 'Compras', 'Cultura', 'Deportes'];
 
 include '../../nav.php';
 ?>
@@ -23,17 +22,16 @@ include '../../nav.php';
     <meta charset="UTF-8">
     <title>Editar Lugar</title>
     <link rel="stylesheet" href="formularioEdit.css">
-
 </head>
 <body>
-
+<br><br>
 <h2>Editar Lugar</h2>
 
-<form action="procesarEditarLugar.php" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="id" value="<?php echo $lugar->getId(); ?>">
+<form class="form" action="procesarEditarLugar.php" method="POST" enctype="multipart/form-data">
+    <input class="input"  type="hidden" name="id" value="<?php echo $lugar->getId(); ?>">
 
     <label for="nombre">Nombre:</label><br>
-    <input type="text" id="nombre" name="nombre" required value="<?php echo htmlspecialchars($lugar->getNombre()); ?>"><br><br>
+    <input class="input"  type="text" id="nombre" name="nombre" required value="<?php echo htmlspecialchars($lugar->getNombre()); ?>"><br><br>
 
     <label for="descripcion">Descripción:</label><br>
     <textarea id="descripcion" name="descripcion" rows="5" required><?php echo htmlspecialchars($lugar->getDescripcion()); ?></textarea><br><br>
@@ -41,8 +39,8 @@ include '../../nav.php';
     <label>Categoría:</label><br>
     <?php foreach ($categoriasDisponibles as $categoria): ?>
         <label>
-            <input type="checkbox" name="categoria[]" value="<?php echo $categoria; ?>"
-                <?php echo in_array($categoria, $categoriasSeleccionadas) ? 'checked' : ''; ?>>
+            <input class="input" type="radio" name="categoria" value="<?php echo $categoria; ?>"
+                <?php echo ($categoria === $categoriaActual) ? 'checked' : ''; ?>>
             <?php echo $categoria; ?>
         </label><br>
     <?php endforeach; ?>
@@ -50,15 +48,16 @@ include '../../nav.php';
 
     <label>Imagen actual:</label><br>
     <?php if ($lugar->getImagen()): ?>
-        <img src="<?php echo htmlspecialchars($lugar->getImagen()); ?>" alt="Imagen lugar" width="150"><br><br>
+        <img src="/Travel-Go/<?php echo htmlspecialchars($lugar->getImagen()); ?>" alt="Imagen lugar" width="150"><br><br>
+
     <?php else: ?>
         <p>No hay imagen subida.</p>
     <?php endif; ?>
 
     <label for="imagen">Cambiar imagen (opcional):</label><br>
-    <input type="file" name="imagen" id="imagen" accept="image/*"><br><br>
+    <input class="guardar" type="file" name="imagen" id="imagen" accept="image/*"><br><br>
 
-    <input type="submit" value= "Guardar cambios">
+    <input class="guardar" type="submit" value= "Guardar cambios">
 </form>
 <?php include '../footer.php'; ?>
 </body>

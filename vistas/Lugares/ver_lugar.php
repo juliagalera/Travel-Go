@@ -34,7 +34,7 @@ $lugar = mysqli_fetch_assoc($result);
 <head>
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($lugar['nombre']); ?> - Detalles</title>
-    <link rel="stylesheet" href="../../filtros.css">
+    <link rel="stylesheet" href="filtros.css">
     <style>
         main {
             max-width: 800px;
@@ -62,7 +62,13 @@ $lugar = mysqli_fetch_assoc($result);
 
     <main>
         <h1><?php echo htmlspecialchars($lugar['nombre']); ?></h1>
-        <img  id="lugar" src="../../img/<?php echo htmlspecialchars($lugar['imagen']); ?>" alt="Imagen de <?php echo htmlspecialchars($lugar['nombre']); ?>">
+        <?php 
+        $imagen = htmlspecialchars($lugar['imagen']);
+        if (substr($imagen, 0, 4) === "img/") {
+            $imagen = substr($imagen, 4);
+        }
+        ?>
+        <img id="lugar" src="../../img/<?php echo $imagen; ?>" alt="Imagen de <?php echo htmlspecialchars($lugar['nombre']); ?>">
         <p style="margin-top: 20px; font-size: 1.2em;"><?php echo htmlspecialchars($lugar['detalle']); ?></p>
     </main>
 

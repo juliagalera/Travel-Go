@@ -16,23 +16,23 @@
     <fieldset>
     <legend><strong>Inicio de sesión</strong></legend>
         <form action="/Travel-Go/index.php?action=iniciarSesion" method="post">
-            <input type="email" name="email" placeholder="Introduce tu email" class="mail" autofocus
+            <input class="input" type="email" name="email" placeholder="Introduce tu email" class="mail" autofocus
                    value="<?php echo isset($_COOKIE['usuario_recordado_email']) ? $_COOKIE['usuario_recordado_email'] : ''; ?>"><br><br>
             
-            <input type="password" name="passwd" class="passwd" placeholder="Introduce tu contraseña"
+            <input class="input" type="password" name="passwd" class="passwd" placeholder="Introduce tu contraseña"
                    value="<?php echo isset($_COOKIE['usuario_recordado_passwd']) ? $_COOKIE['usuario_recordado_passwd'] : ''; ?>"><br><br>
 
                 <label class="checkbox-container">
                     <input type="checkbox" name="recordar" id="recordar">
                     <span>Mantener sesión iniciada</span>
                 </label>
-
+<br>
                 <label class="checkbox-container">
-                    <input type="checkbox" name="recordarDatos" id="recordarDatos">
+                    <input class="input" type="checkbox" name="recordarDatos" id="recordarDatos">
                     <span>Recordar mi email y contraseña</span>
                 </label>
 
-
+<br>
 
             <button id="login" type="submit">Iniciar sesión</button>
         </form>

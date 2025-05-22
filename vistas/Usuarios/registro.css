@@ -1,30 +1,9 @@
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
+  line-height: 1.6;
+  padding: 20px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100vh;
-  box-sizing: border-box;
-}
-nav {
-  width: 100%;
-  height: 70px; /* Asegúrate de que la altura sea constante */
-  padding: 0 20px;
-  background-color: #f7a8e0; /* Rosa pastel */
-  display: flex;
-  justify-content: space-between; /* Alinea el logo y los enlaces */
-  align-items: center; /* Centra verticalmente */
-  gap: 20px;
-  border-bottom: 1.5px solid black;
-  position: fixed; /* Para que el nav esté siempre en la parte superior */
-  top: 0;
-  left: 0;
-  z-index: 1000; /* Para asegurarse de que el nav se quede encima del contenido */
 }
 
 #contenedorLogo {
@@ -36,13 +15,13 @@ nav {
 }
 
 #logo {
-  height: 60px; /* Tamaño constante para el logo */
+  height: 60px;
   width: auto;
 }
-input:invalid {
+.forminp:invalid {
   border-color: red;
 }
-input:valid {
+.forminp:valid {
   border-color: green;
 }
 
@@ -72,7 +51,7 @@ label {
   color: #333;
 }
 
-input {
+.forminp {
   width: 90%;
   height: 30px;
   margin: 10px 0;
@@ -81,8 +60,9 @@ input {
   border-radius: 5px;
 }
 
-button {
+.button {
   margin-top: 20px;
+  margin-left: 85px;
   background-color: #f7a8e0;
   color: white;
   font-weight: bold;
@@ -94,15 +74,6 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+.button:hover {
   background-color: #e580ce;
-}
-
-#terminos {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #555;
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }

@@ -1,31 +1,18 @@
-/* Estilo general para body */
+html,
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fff0f5;
+  height: 100%;
   margin: 0;
   padding: 0;
-  color: #333;
-  padding-top: 60px; /* Deja espacio para el navbar fijo */
-  padding-bottom: 60px; /* Deja espacio para el footer */
-  box-sizing: border-box;
-  min-height: 100vh; /* Esto asegura que el cuerpo ocupe toda la altura de la ventana */
   display: flex;
   flex-direction: column;
 }
 
-/* Contenedor principal */
-main {
-  flex: 1; /* Hace que el main ocupe el espacio disponible */
-}
-
-/* Encabezado principal */
 h1 {
   text-align: center;
   color: #d63384;
   margin-bottom: 30px;
 }
 
-/* Botón para agregar nuevo lugar */
 .btn-agregar,
 .btn-login {
   display: inline-block;
@@ -46,7 +33,6 @@ h1 {
   background-color: #e667af;
 }
 
-/* Tabla de lugares */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -77,7 +63,6 @@ img {
   border-radius: 10px;
 }
 
-/* Mensaje de no logueado */
 .mensaje-container {
   max-width: 500px;
   margin: 100px auto;
@@ -99,7 +84,6 @@ img {
   margin-bottom: 20px;
 }
 
-/* Estilo para los avisos de lugares duplicados */
 .aviso-duplicado {
   background-color: #f8d7da;
   border: 1px solid #f5c6cb;
@@ -132,7 +116,6 @@ img {
   color: #155724;
 }
 
-/* Estilos para los botones de acción (editar, cancelar) */
 .aviso-duplicado a:nth-child(1) {
   background-color: #f7c1c1;
   border-color: #f7b0b0;
@@ -152,9 +135,32 @@ img {
   background-color: #e2e2e2;
   color: #721c24;
 }
+.enlace {
+  display: inline-block;
+  padding: 8px 14px;
+  margin-right: 10px;
+  background-color: #ffe0ec;
+  color: #d63384;
+  text-decoration: none;
+  border: 1px solid #f8b7d1;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
+}
 
-/* Asegura que el contenido principal ocupe el espacio restante */
-main {
-  flex-grow: 1;
-  padding-bottom: 60px; /* Deja espacio para el footer */
+.enlace:hover {
+  background-color: #f8b7d1;
+  color: white;
+  border-color: #d63384;
+}
+.enlace.eliminar {
+  background-color: #fdd8e5;
+  color: #a1003b;
+  border-color: #f3a6c3;
+}
+
+.enlace.eliminar:hover {
+  background-color: #d63384;
+  color: white;
 }

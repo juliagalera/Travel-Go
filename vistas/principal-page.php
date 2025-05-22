@@ -6,7 +6,6 @@
     <title>Página principal</title>
     <style>
         body, html {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f8f9fa;
@@ -151,13 +150,11 @@
 
         function toggleSelection(button, category) {
             if (selectedCategories.includes(category)) {
-                // Si ya está seleccionado, eliminarlo
                 selectedCategories = selectedCategories.filter(item => item !== category);
-                button.style.backgroundColor = ""; // Restablecer el estilo
+                button.style.backgroundColor = ""; 
             } else if (selectedCategories.length < 1 ) {
-                // Si el número de selecciones es menor al máximo, agregarlo
                 selectedCategories.push(category);
-                button.style.backgroundColor = "#bbdefb"; // Marcar el botón como seleccionado
+                button.style.backgroundColor = "#bbdefb"; 
             } else {
                 alert("Solo puedes seleccionar 1 categoría.");
             }
@@ -182,7 +179,7 @@
     } else if (selectedCategories.includes("deportes")) {
         window.location.href = "/Travel-Go/vistas/Lugares/deportes.php";
     } else {
-        document.getElementById("error").innerHTML = "<p style='color:red; margin-left:330px;'>Selecciona algún filtro, o visita nuestra página principal para ver todas las categorías.</p>";
+        window.location.href = "/Travel-Go/inicio.php";
     }
 }
 

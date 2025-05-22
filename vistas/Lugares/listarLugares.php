@@ -2,10 +2,8 @@
 require_once(__DIR__ . '/../../config/database.php');
 require_once(__DIR__ . '/../../controladores/LugarController.php');
 
-// Iniciar sesión y obtener el ID del usuario logueado
 session_start();
 if (!isset($_SESSION['usuario_id'])) {
-    include('../../nav.php');
     ?>
     <!DOCTYPE html>
     <html lang="es">
@@ -28,11 +26,8 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $userId = $_SESSION['usuario_id'];
 
-
-// Crear una instancia de LugarController
 $lugarController = new LugarController($conn);
 
-// Obtener los lugares creados por el usuario logueado
 $lugares = $lugarController->obtenerLugaresPorUsuario($userId);
 include('../../nav.php');
 ?>
@@ -58,31 +53,31 @@ include('../../nav.php');
             <th>Imagen</th> 
             <th>Categoría</th>
             <th>Acciones</th>
-            
         </tr>
     </thead>
     <tbody>
         <?php if (count($lugares) > 0): ?>
             <?php foreach ($lugares as $lugar): ?>
                 <tr>
-                    <td><?php $stmt = "SELECT nombre FROM LUGARES WHERE user_id = $userId";
-                        $conn->query($stmt);
-                    ?>
-                </td>
-                    <td><?php $stmt = "SELECT detalle FROM LUGARES WHERE user_id = $userId"; 
-                    $conn->query($stmt);
-                    ?></td>
-
-
-                    <td>      
-                     <?php $stmt = "SELECT imagen FROM LUGARES WHERE user_id = $userId" ; 
-                     $conn->query($stmt);?>
-                    </td>
-                    <td><?php $stmt = "SELECT categoria FROM LUGARES WHERE user_id = $userId" ;
-                    $conn->query($stmt);?></td>
+                    <td><?= htmlspecialchars($lugar['nombre']) ?></td>
+                    <td><?= htmlspecialchars($lugar['detalle']) ?></td>
                     <td>
-                        <a href="formularioEditarLugar.php?id=<?php echo $lugar['id']; ?>">Editar</a>
-                        <a href="listarLugares.php" onclick="return confirm('¿Estás seguro de eliminar este lugar?');">Eliminar</a>
+                        <?php 
+                        if (!empty($lugar['imagen'])): 
+                            $imagen = htmlspecialchars($lugar['imagen']);
+                            if (substr($imagen, 0, 4) === "img/") {
+                                $imagen = substr($imagen, 4);
+                            }
+                        ?>
+                            <img src="../../img/<?php echo $imagen; ?>" alt="Imagen del lugar" width="100">
+                        <?php else: ?>
+                            Sin imagen
+                        <?php endif; ?>
+                    </td>
+                    <td><?= htmlspecialchars($lugar['categoria']) ?></td>
+                    <td>
+                        <a class="enlace" href="formularioEditarLugar.php?id=<?= $lugar['id']; ?>">Editar</a>
+                        <a class="enlace"  href="eliminarLugar.php?id=<?= $lugar['id']; ?>" onclick="return confirm('¿Estás seguro de eliminar este lugar?');">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -92,8 +87,7 @@ include('../../nav.php');
             </tr>
         <?php endif; ?>
     </tbody>
-</table>
-
+    </table>
 
     <?php include('../footer.php'); ?>
 </body>

@@ -1,7 +1,7 @@
 <style>
     footer{
         width: 100%;
-        heigth: auto;
+        height: auto;
         padding: 20px 0;
         text-align: center;
         background-color: black; 

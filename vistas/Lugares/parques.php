@@ -43,7 +43,11 @@ $limite = 50;
                 }
 
                 echo '<div class="category">';
-                echo '<img src="../../img/' . htmlspecialchars($row['imagen']) . '" alt="' . htmlspecialchars($row['nombre']) . '" />';
+                $imagen = htmlspecialchars($row['imagen']);
+                if (substr($imagen, 0, 4) === "img/") {
+                    $imagen = substr($imagen, 4);
+                }
+                echo '<img src="../../img/' . $imagen . '" alt="' . htmlspecialchars($row['nombre']) . '" />';
                 echo '<h2>' . htmlspecialchars($row['nombre']) . '</h2>';
                 echo '<p>' . htmlspecialchars($descripcionCorta) . '</p>';
                 ?>

@@ -1,27 +1,23 @@
 <?php
-include '../../nav.php';
 require_once '../../config/database.php';
 require_once '../../modelos/Lugar.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Recoger y validar datos
     $id = intval($_POST['id']);
     $nombre = trim($_POST['nombre']);
     $descripcion = trim($_POST['descripcion']);
-    $categorias = isset($_POST['categoria']) ? $_POST['categoria'] : [];
-    $categoriasTexto = implode(',', $categorias);
+    $categoriaString = $_POST['categoria']; 
 
-    // Obtener lugar existente
+
     $lugar = Lugar::obtenerLugarPorId($conn, $id);
     if (!$lugar) {
         die("Lugar no encontrado.");
     }
 
-    // Procesar imagen si se ha subido una nueva
-    $nuevaRutaImagen = $lugar->getImagen(); // Por defecto, mantener la existente
+    $nuevaRutaImagen = $lugar->getImagen();
 
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-        $directorioDestino = '../../imagenes/';
+        $directorioDestino = '../../img/';
         $nombreArchivo = basename($_FILES['imagen']['name']);
         $rutaArchivo = $directorioDestino . time() . '_' . $nombreArchivo;
 
@@ -32,13 +28,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // Actualizar el lugar
     $lugar->setNombre($nombre);
     $lugar->setDescripcion($descripcion);
-    $lugar->setCategoria($categoriasTexto);
+    $lugar->setCategoria($categoriaString);
     $lugar->setImagen($nuevaRutaImagen);
 
-    $resultado = $lugar->actualizarLugar($conn);
+    $resultado = $lugar->actualizarLugar();
+    if($resultado){
+        header("Location: listarLugares.php");
+        exit;
+
+    }else{
+        echo "Error al actualizar el lugar";
+    }
+
 }
 include '../footer.php';
 

@@ -92,11 +92,25 @@ public function crearLugar($nombre, $descripcion, $imagen = null, $categoria, $u
             return;
         }
 
-        $imagenPath = 'img/' . basename($imagen['name']);
-        if (!move_uploaded_file($imagen['tmp_name'], $imagenPath)) {
+       $nombreArchivo = basename($imagen['name']);
+        $nombreArchivo = basename($imagen['name']);
+        $directorioDestino = __DIR__ . '/../img/';
+        $rutaAbsoluta = $directorioDestino . $nombreArchivo;
+
+        // Asegura que la carpeta exista
+        if (!file_exists($directorioDestino)) {
+            mkdir($directorioDestino, 0755, true);
+        }
+
+        // Intenta mover el archivo
+        if (!move_uploaded_file($imagen['tmp_name'], $rutaAbsoluta)) {
             echo "Error al subir la imagen.";
             return;
         }
+
+        // Guarda la ruta relativa para la base de datos y para mostrar
+        $imagenPath = 'img/' . $nombreArchivo;
+
 
         echo "<img src='$imagenPath' alt='" . htmlspecialchars($imagen['name']) . "' width='100'>";
     } elseif (isset($_FILES['imagen']) && $_FILES['imagen']['error'] !== UPLOAD_ERR_NO_FILE) {

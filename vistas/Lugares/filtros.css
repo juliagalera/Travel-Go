@@ -5,7 +5,6 @@
 }
 
 body {
-  font-family: "Arial", sans-serif;
   background-color: #f4f4f9;
   color: #333;
 }
@@ -43,8 +42,8 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 250px; /* Garantiza una altura mínima para la tarjeta */
-  position: relative; /* Necesario para posicionar el enlace */
+  min-height: 250px;
+  position: relative;
 }
 
 .category:hover {
@@ -68,7 +67,7 @@ h1 {
   color: #666;
   font-size: 1.1em;
   margin-top: 10px;
-  flex-grow: 1; /* Esto permite que el párrafo ocupe el espacio disponible */
+  flex-grow: 1;
 }
 
 .view-more {
@@ -78,8 +77,8 @@ h1 {
   color: #007bff;
   text-decoration: none;
   position: absolute;
-  bottom: 20px; /* Fija el enlace en la parte inferior */
-  right: 20px; /* Fija el enlace a la derecha */
+  bottom: 20px;
+  right: 20px;
 }
 
 .view-more:hover {

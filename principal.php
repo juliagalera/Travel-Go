@@ -5,29 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal</title>
     <style>
-        /* General styles */
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9; /* Fondo claro y suave */
+            background-color: #f4f4f9;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Espaciado dinámico para el footer */
-            min-height: 100vh; /* Altura mínima para que cubra la pantalla */
+            justify-content: space-between; 
+            min-height: 100vh; 
         }
 
-        /* Loader styles */
         #loader {
             font-size: 3rem;
-            color: #444; /* Color gris oscuro para el texto */
+            color: #444; 
             text-align: center;
             margin-top: 20px;
             animation: pulse 1.5s infinite;
             font-weight: bold;
         }
 
-        /* Animación del loader */
         @keyframes pulse {
             0% {
                 transform: scale(1);
@@ -43,55 +40,44 @@
             }
         }
 
-        /* Ocultar contenido hasta que cargue */
         #content {
             display: none;
             text-align: center;
             padding: 20px;
         }
 
-        /* Título principal */
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             color: #333;
         }
 
-        /* Texto del párrafo */
         p {
             font-size: 1.2rem;
             margin-bottom: 20px;
             color: #555;
         }
 
-        /* Botón personalizado */
         #inicio {
             text-decoration: none;
             font-size: 1.2rem;
-            color: white; /* Texto blanco */
-            background-color: #F7A8E0; /* Azul suave */
+            color: white;
+            background-color: #F7A8E0;
             padding: 10px 20px;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
 
-        /* Efecto al pasar el ratón por encima del botón */
         #inicio:hover {
-            background-color: #0056b3; /* Azul más oscuro */
+            background-color: #0056b3;
         }
 
-        /* Footer styles */
-        footer {
-
-        }
     </style>
 </head>
 <body>
     <main>
-        <!-- Loader -->
         <div id="loader">Bienvenido!!</div>
 
-        <!-- Contenido principal oculto inicialmente -->
         <div id="content">
             <?php include('nav.php'); ?>
             <h1>¡Registro exitoso!</h1><br>
@@ -103,7 +89,6 @@
   <?php include('vistas/footer.php'); ?>
 
     <script>
-        // Mostrar el contenido y ocultar el loader después de 1 segundo
         setTimeout(() => {
             document.getElementById('loader').style.display = 'none';
             document.getElementById('content').style.display = 'block';

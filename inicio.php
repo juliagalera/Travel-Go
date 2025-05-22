@@ -9,7 +9,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
         }
 
         body {
@@ -17,7 +16,7 @@
             color: #333;
             line-height: 1.6;
             padding: 20px;
-            min-height: 100vh; /* Asegura que el cuerpo ocupe toda la altura */
+            min-height: 100vh; 
             display: flex;
             flex-direction: column;
         }
@@ -35,7 +34,7 @@
             gap: 20px;
             justify-items: center;
             padding: 20px;
-            flex-grow: 1; /* Hace que la sección de categorías ocupe el espacio restante */
+            flex-grow: 1; 
         }
 
         .category {
@@ -96,15 +95,6 @@
             }
         }
 
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
     </style>
 </head>
 <body>

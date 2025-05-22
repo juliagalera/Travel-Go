@@ -1,5 +1,4 @@
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right, #ffe0ec, #ffeef3);
   margin: 0;
   padding: 0;
@@ -12,7 +11,7 @@ h2 {
   font-size: 2em;
 }
 
-form {
+.form {
   max-width: 600px;
   margin: 40px auto;
   background-color: #fff;
@@ -28,9 +27,9 @@ label {
   color: #444;
 }
 
-input[type="text"],
+.input[type="text"],
 textarea,
-input[type="file"] {
+.input[type="file"] {
   width: 100%;
   padding: 10px;
   border: 2px solid #f8b7d1;
@@ -41,18 +40,18 @@ input[type="file"] {
   transition: border 0.3s ease;
 }
 
-input[type="text"]:focus,
+.input[type="text"]:focus,
 textarea:focus,
-input[type="file"]:focus {
+.input[type="file"]:focus {
   border-color: #d63384;
   outline: none;
 }
 
-input[type="checkbox"] {
+.input[type="checkbox"] {
   margin-right: 10px;
 }
 
-input[type="submit"] {
+.input[type="submit"] {
   background-color: #d63384;
   color: white;
   border: none;
@@ -64,7 +63,7 @@ input[type="submit"] {
   transition: background-color 0.3s ease;
 }
 
-input[type="submit"]:hover {
+.input[type="submit"]:hover {
   background-color: #b92d6e;
 }
 
@@ -78,4 +77,19 @@ img {
 
 textarea {
   resize: vertical;
+}
+.guardar {
+  background-color: #f8b7d1;
+  color: #5a004f;
+  border: 1px solid #f3a6c3;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.guardar:hover {
+  background-color: #f3a6c3;
+  color: #fff;
 }

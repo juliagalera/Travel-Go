@@ -3,7 +3,6 @@ session_start();
 require_once '../../config/database.php';
 require_once '../../controladores/LugarController.php';
 
-// Verifica si el usuario está logueado
 if (!isset($_SESSION['usuario_id'])) {
     echo "No estás logueado. Por favor, inicia sesión.";
     exit(); 

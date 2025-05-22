@@ -17,16 +17,16 @@ include('../../nav.php');
 <body>
     <div class="container">
         <h1>Añadir Nuevo Lugar</h1>
-        <form action="procesarFormulario.php" method="POST" enctype="multipart/form-data">
+        <form id="nuevoLugar"action="procesarFormulario.php" method="POST" enctype="multipart/form-data">
             <label for="nombre">Nombre del lugar:</label>
-            <input type="text" name="nombre" id="nombre" required>
+            <input class="input" type="text" name="nombre" id="nombre" required>
 
             <label for="descripcion">Descripción:</label>
             <textarea name="descripcion" id="descripcion" rows="5" required></textarea>
 
 
             <label for="imagen">Imagen (opcional):</label>
-            <input type="file" name="imagen" id="imagen">
+            <input class="input" type="file" name="imagen" id="imagen">
 
             <label for="categoria">Categoría:</label>
             <select name="categoria" id="categoria">
@@ -37,7 +37,7 @@ include('../../nav.php');
                 <option value="parques">Parques</option>
             </select>
 
-            <input type="submit" value="Guardar Lugar">
+            <input class="input" type="submit" value="Guardar Lugar">
         </form>
     </div>
     <?php include('../footer.php'); ?>
