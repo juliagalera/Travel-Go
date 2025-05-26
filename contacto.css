@@ -57,31 +57,17 @@ textarea {
   height: 80px;
   resize: none;
 }
-
-#recordar {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-#recordar input {
-  width: auto;
-}
-
-#button {
-  margin-top: 20px;
-  background-color: #f7a8e0;
+button {
+  background-color: #ff69b4;
   color: white;
-  font-weight: bold;
-  width: 150px;
-  height: 40px;
   border: none;
+  padding: 12px 24px;
+  font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
-#button:hover {
-  background-color: #e580ce;
+button:hover {
+  background-color: #ff1493;
 }

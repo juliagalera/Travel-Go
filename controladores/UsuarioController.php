@@ -24,19 +24,22 @@ class UsuarioController {
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 echo "<script>alert('El correo electrónico no es válido.');</script>";
-                header('Location: registro.php');
+                header('Location:../vistas/registro.php');
                 return;
             }
 
             if ($passwd1 !== $passwd2) {
                 echo "<script>alert('Las contraseñas no coinciden.');</script>";
-                header('Location: registro.php');
+                header('Location: ../vistas/registro.php');
                 return;
             }
 
             if (strlen($passwd1) < 6) {
                 echo "<script>alert('La contraseña debe tener al menos 6 caracteres.');</script>";
                 return;
+            }
+            if($email){
+                echo "<script> alert('el correo ya está registrado.');</scrip>";
             }
 
             $hashedPasswd = password_hash($passwd1, PASSWORD_BCRYPT);
@@ -50,7 +53,7 @@ class UsuarioController {
             $_SESSION['user_name'] = $nombre;
 
             if (isset($_POST['email'])) {
-                setcookie('user_email', $email, time() + 3600 * 24 * 30, '/', '', false, true); // HttpOnly
+                setcookie('user_email', $email, time() + 3600 * 24 * 30, '/', '', false, true);  
             }
 
             header("Location: /Travel-Go/index.php");
