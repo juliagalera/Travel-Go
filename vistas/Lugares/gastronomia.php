@@ -28,7 +28,7 @@ $limite = 50;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><?php echo htmlspecialchars($category); ?> - Granada</title>
-    <link rel="stylesheet" href="filtros.css" />
+    <link rel="stylesheet" href="css/filtros.css" />
 </head>
 <body>
     <?php include('../../nav.php'); ?>

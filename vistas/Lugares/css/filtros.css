@@ -120,7 +120,6 @@ footer p {
   border-color: #f3a847;
 }
 
-/* Estilos de Responsividad */
 @media (max-width: 768px) {
   nav ul li {
     margin: 0 10px;
@@ -240,4 +239,23 @@ footer p {
 
 .valoraciones li span.estrella.vacia {
   color: lightgray;
+}
+main {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#lugar {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+#lugar:hover {
+  transform: scale(1.05);
 }

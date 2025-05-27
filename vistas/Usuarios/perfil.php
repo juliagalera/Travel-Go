@@ -61,6 +61,14 @@ if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
     }
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>+Mi perfil</title>
+</head>
+<body>
 
 <?php include('../../nav.php'); ?>
 
@@ -105,6 +113,8 @@ if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
 
 <?php include_once('../footer.php'); ?>  
 
+    
+</body>
 <style>
     body {
         margin: 0;
@@ -177,3 +187,4 @@ if (isset($_GET['eliminar']) && $_GET['eliminar'] == '1') {
         color: #e91e63;
     }
 </style>
+</html>

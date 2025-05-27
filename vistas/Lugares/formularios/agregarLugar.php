@@ -5,7 +5,7 @@ if (!isset($_SESSION['usuario_id'])) {
     header('Location: /Travel-Go/vistas/Usuarios/login.php');
     exit;
 }
-include('../../nav.php');ç
+include('../../../nav.php');ç
 
 ?>
 
@@ -14,7 +14,7 @@ include('../../nav.php');ç
 <head>
     <meta charset="UTF-8">
     <title>Agregar Lugar</title>
-    <link rel="stylesheet" href="agregar.css">
+    <link rel="stylesheet" href="../css/agregar.css">
 </head>
 <body>
     <h1>Agregar un nuevo lugar</h1>
@@ -38,6 +38,6 @@ include('../../nav.php');ç
     <br>
     <a href="/Travel-Go/vistas/principal-page.php">Volver a la página principal</a>
     <?php
-    include('../footer.php'); ?>
+    include('../../footer.php'); ?>
 </body>
 </html>

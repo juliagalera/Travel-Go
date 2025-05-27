@@ -1,6 +1,6 @@
 <?php
-require_once '../../config/database.php';
-require_once '../../modelos/Lugar.php';
+require_once '../../../config/database.php';
+require_once '../../../modelos/Lugar.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $id = intval($_POST['id']);
@@ -43,6 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
 }
-include '../footer.php';
+include '../../footer.php';
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 
-include '../../config/database.php';
-require_once ('../../controladores/LugarController.php');
+include '../../../config/database.php';
+require_once ('../../../controladores/LugarController.php');
 
 $id = intval($_GET['id']);
 $lugar = Lugar::obtenerLugarPorId($conn, $id);
@@ -14,14 +14,14 @@ $categoriaActual = $lugar->getCategoria();
 
 $categoriasDisponibles = ['Parque', 'Gastronomía', 'Compras', 'Cultura', 'Deportes'];
 
-include '../../nav.php';
+include '../../../nav.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Editar Lugar</title>
-    <link rel="stylesheet" href="formularioEdit.css">
+    <link rel="stylesheet" href="../css/formularioEdit.css">
 </head>
 <body>
 <br><br>
@@ -59,6 +59,6 @@ include '../../nav.php';
 
     <input class="guardar" type="submit" value= "Guardar cambios">
 </form>
-<?php include '../footer.php'; ?>
+<?php include '../../footer.php'; ?>
 </body>
 </html>

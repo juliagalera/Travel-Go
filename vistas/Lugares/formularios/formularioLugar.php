@@ -1,10 +1,10 @@
 <?php
 session_start();
-require_once '../../config/database.php';
-require_once '../../controladores/LugarController.php';
+require_once '../../../config/database.php';
+require_once '../../../controladores/LugarController.php';
 
 $controller = new LugarController($conn);
-include('../../nav.php');
+include('../../../nav.php');
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ include('../../nav.php');
 <head>
     <meta charset="UTF-8">
     <title>Añadir Lugar</title>
-    <link rel="stylesheet" href="formulario.css">
+    <link rel="stylesheet" href="../css/formulario.css">
 </head>
 <body>
     <div class="container">
@@ -40,6 +40,6 @@ include('../../nav.php');
             <input class="input" type="submit" value="Guardar Lugar">
         </form>
     </div>
-    <?php include('../footer.php'); ?>
+    <?php include('../../footer.php'); ?>
 </body>
 </html>

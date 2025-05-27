@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../../config/database.php';
-require_once '../../controladores/LugarController.php';
+require_once '../../../config/database.php';
+require_once '../../../controladores/LugarController.php';
 
 if (!isset($_SESSION['usuario_id'])) {
     echo "No estás logueado. Por favor, inicia sesión.";
@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $categoria = $_POST['categoria'] ?? '';
     $imagen = $_FILES['imagen'];
 
-    // Llamada al método para crear un nuevo lugar
     $controller->crearLugar($nombre, $descripcion, $imagen, $categoria, $user_id);
 } else {
     echo "No se ha podido crear.";

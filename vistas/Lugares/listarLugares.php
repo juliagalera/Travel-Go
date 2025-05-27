@@ -38,12 +38,12 @@ include('../../nav.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Lugares</title>
-    <link rel="stylesheet" href="lista.css">
+    <link rel="stylesheet" href="css/lista.css">
 </head>
 <body>
     <h1>Lista de Lugares</h1>
 
-    <a href="formularioLugar.php" class="btn-agregar">Agregar nuevo lugar</a> 
+    <a href="formularios/formularioLugar.php" class="btn-agregar">Agregar nuevo lugar</a> 
 
     <table>
     <thead>
