@@ -97,18 +97,15 @@ public function crearLugar($nombre, $descripcion, $imagen = null, $categoria, $u
         $directorioDestino = __DIR__ . '/../img/';
         $rutaAbsoluta = $directorioDestino . $nombreArchivo;
 
-        // Asegura que la carpeta exista
         if (!file_exists($directorioDestino)) {
             mkdir($directorioDestino, 0755, true);
         }
 
-        // Intenta mover el archivo
         if (!move_uploaded_file($imagen['tmp_name'], $rutaAbsoluta)) {
             echo "Error al subir la imagen.";
             return;
         }
 
-        // Guarda la ruta relativa para la base de datos y para mostrar
         $imagenPath = 'img/' . $nombreArchivo;
 
 
@@ -131,13 +128,11 @@ public function crearLugar($nombre, $descripcion, $imagen = null, $categoria, $u
 
     
 
-    // Listar todos los lugares
     public function listarLugares() {
         $lugares = Lugar::obtenerTodosLugares($this->conn);
         require_once 'vistas/lugares/listarLugares.php'; 
     }
 
-    // Editar lugar con categoría
     public function editarLugar($id, $nuevoNombre, $nuevaDescripcion, $nuevaImagen = null, $nuevaCategoria) {
         $nuevoNombre = htmlspecialchars(trim($nuevoNombre));
         $nuevaDescripcion = htmlspecialchars(trim($nuevaDescripcion));
@@ -188,7 +183,6 @@ public function crearLugar($nombre, $descripcion, $imagen = null, $categoria, $u
         }
     }
 
-    // Eliminar lugar
     public function eliminarLugar($id) {
         $lugar = Lugar::obtenerLugarPorId($this->conn, $id);
 
@@ -205,20 +199,18 @@ public function crearLugar($nombre, $descripcion, $imagen = null, $categoria, $u
         }
     }
 
-    // Obtener detalles de un lugar
     public function obtenerDetallesLugar($id) {
         $lugar = Lugar::obtenerLugarPorId($this->conn, $id);
         if ($lugar) {
             echo "Lugar: " . $lugar->getNombre() . "<br>";
             echo "Descripción: " . $lugar->getDescripcion() . "<br>";
             echo "Imagen: " . $lugar->getImagen() . "<br>";
-            echo "Categoría: " . $lugar->getCategoria() . "<br>";  // Mostramos la categoría
+            echo "Categoría: " . $lugar->getCategoria() . "<br>";  
         } else {
             echo "Lugar no encontrado";
         }
     }
 
-    // Buscar lugares con categoría incluida en la búsqueda
     public function buscarLugares($busqueda) {
         $busqueda = htmlspecialchars(trim($busqueda)); 
         $lugares = Lugar::buscarLugares($this->conn, $busqueda);
@@ -228,11 +220,29 @@ public function crearLugar($nombre, $descripcion, $imagen = null, $categoria, $u
                 echo "Lugar: " . $lugar->getNombre() . "<br>";
                 echo "Descripción: " . $lugar->getDescripcion() . "<br>";
                 echo "Imagen: " . $lugar->getImagen() . "<br>";
-                echo "Categoría: " . $lugar->getCategoria() . "<br><br>";  // Mostramos la categoría
+                echo "Categoría: " . $lugar->getCategoria() . "<br><br>";  
             }
         } else {
             echo "No se encontraron lugares";
         }
     }
+
+    public function obtenerLugarConValoraciones($id_lugar) {
+        $lugar = Lugar::obtenerLugarPorId($this->conn, $id_lugar);
+        if (!$lugar) {
+            return null;
+        }
+
+        $valoracionModel = new Valoracion($this->conn);
+        $valoraciones = $valoracionModel->obtenerValoracionesConUsuario($id_lugar);
+
+        return [
+            'lugar' => $lugar,
+            'valoraciones' => $valoraciones
+        ];
+    }
+    
+
 }
 ?>
+

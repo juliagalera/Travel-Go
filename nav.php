@@ -13,6 +13,12 @@ if (session_status() === PHP_SESSION_NONE) {
 html, body {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  padding-top: 80px;
 }
 
 nav {
@@ -22,46 +28,68 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px; 
+  padding: 0 20px;
   border-bottom: 1.5px solid black;
-  box-sizing: border-box;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000; 
+  z-index: 1000;
+  box-sizing: border-box;
+  flex-wrap: wrap; 
 }
 
 .left-section,
 .right-section {
   width: 150px;
+  display: flex;
+  align-items: center;
+}
+
+.left-section img {
+  height: 50px;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .center-links {
-  flex: 1;
+  flex: 1 1 auto; 
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  margin-left: 250px;
   position: relative;
+  flex-wrap: wrap;
 }
 
 .center-links .links-container {
   display: flex;
   gap: 20px;
   justify-content: center;
-  flex: 1;
+  flex-wrap: wrap;
+}
+
+.center-links a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.center-links a:hover {
+  color: #e580ce;
 }
 
 .center-links form {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  margin-left: 20px;
   min-width: 180px;
-  max-width: 250px; 
+  max-width: 250px;
   justify-content: flex-end;
   box-sizing: border-box;
+  flex-shrink: 1;
 }
 
 .center-links form input[type="text"] {
@@ -88,8 +116,8 @@ nav {
   background-color: #e580ce;
   color: white;
   font-size: 16px;
-  width: 40px;      
-  height: 32px;     
+  width: 40px;
+  height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,37 +129,24 @@ nav {
   background-color: #d45ba1;
 }
 
-.left-section img {
-  height: 50px;
-}
-
-.center-links a {
-  text-decoration: none;
-  color: black;
-  font-size: 18px;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-.center-links a:hover {
-  color: #e580ce;
-}
-
 .right-section {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  gap: 5px;
+  flex-shrink: 0;
 }
 
 .right-section a {
   text-decoration: none;
   color: black;
-  font-size: 14px; 
+  font-size: 14px;
   font-weight: bold;
   padding: 3px 8px;
   background-color: white;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
 }
 
 .right-section a:hover {
@@ -140,18 +155,75 @@ nav {
 }
 
 .logout-link {
-  font-size: 7px; 
-  color: #666; 
-  margin-top: 5px; 
-  text-decoration: none; 
+  font-size: 7px;
+  color: #666;
+  margin-top: 5px;
+  text-decoration: none;
 }
 
 .logout-link:hover {
-  color: #e580ce; 
+  color: #e580ce;
 }
 
-body {
-  padding-top: 80px; 
+
+@media (max-width: 900px) {
+  nav {
+    height: auto;
+    padding: 10px 15px;
+  }
+  .left-section,
+  .right-section {
+    width: auto;
+  }
+  .center-links {
+    margin: 10px 0 0 0;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  .center-links form {
+    max-width: 100%;
+    min-width: auto;
+    flex-grow: 1;
+  }
+  .center-links form input[type="text"] {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+  .left-section,
+  .center-links,
+  .right-section {
+    width: 100%;
+    justify-content: flex-start;
+    margin: 5px 0;
+  }
+  .center-links {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .center-links .links-container {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .right-section {
+    flex-direction: row;
+    gap: 10px;
+  }
+  .right-section a {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  .logout-link {
+    font-size: 9px;
+  }
 }
 
 

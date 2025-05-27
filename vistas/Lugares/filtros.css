@@ -171,3 +171,73 @@ footer p {
 .nuevo-lugar-btn a:hover {
   background-color: #e26ca1;
 }
+
+.rating span {
+  font-size: 40px;
+  cursor: pointer;
+  color: gray;
+  user-select: none;
+  transition: color 0.2s;
+}
+
+.rating span:hover,
+.rating span:hover ~ span {
+  color: gray;
+}
+
+.rating span:hover,
+.rating span:hover ~ span {
+  color: gray;
+}
+
+.rating span.selected,
+.rating span.selected ~ span {
+  color: gold;
+}
+
+.valoraciones {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #fff0f5;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.valoraciones h2 {
+  margin-bottom: 15px;
+  font-size: 24px;
+  color: #d63384;
+  border-bottom: 2px solid #f8d7da;
+  padding-bottom: 5px;
+}
+
+.valoraciones ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.valoraciones li {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0c2d0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.valoraciones li:last-child {
+  border-bottom: none;
+}
+
+.valoraciones strong {
+  color: #b4005c;
+  font-weight: 600;
+}
+
+.valoraciones li span.estrella {
+  font-size: 20px;
+  color: gold;
+}
+
+.valoraciones li span.estrella.vacia {
+  color: lightgray;
+}

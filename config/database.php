@@ -31,7 +31,6 @@ $sql = "CREATE TABLE IF NOT EXISTS usuarios(
 )";
 $conn->query($sql);
 
-// Crear tabla lugares si no existe
 $sql = "CREATE TABLE IF NOT EXISTS lugares (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
@@ -39,6 +38,17 @@ $sql = "CREATE TABLE IF NOT EXISTS lugares (
     imagen VARCHAR(255),
     categoria VARCHAR(255),
     user_id INT
+)";
+$conn->query($sql);
+
+$sql = "CREATE TABLE  IF NOT EXISTS valoraciones (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_lugar INT NOT NULL,
+  id_usuario INT NOT NULL,
+  valoracion INT NOT NULL,
+  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (id_lugar, id_usuario) 
+
 )";
 $conn->query($sql);
 
